@@ -1,0 +1,19 @@
+//general color
+$color-white: #fff;
+
+//component color
+$border-color: #d3d3d3;
+
+
+@mixin block($width: 0, $height: auto, $radius: 0, $background-color: $color-white) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+  background-color: $background-color;
+}
+
+@mixin border($width: 1px, $color: $border-color, $style: solid) {
+  border-width: $width;
+  border-color: $color;
+  border-style: $style;
+}
