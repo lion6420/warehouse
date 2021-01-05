@@ -3,6 +3,7 @@
     <div :class="$style.sidebar"></div>
     <div :class="$style.body">
       <div :class="$style.header"></div>
+      <div :class="$style.breadcrumb"></div>
       <div :class="$style.content">
         <router-view></router-view>
       </div>
@@ -19,10 +20,9 @@ export default {
 <style lang="scss" module>
 @import '@/styles/general/general.module.scss';
 .app {
-  @include block(100%, $background-color: #000); //width: 100%, height: auto;
-  margin: 0px;
+  @include block(100%); //width: 100%, height: auto;
   .sidebar {
-    @include block(160px, 100%, $background-color: #000);
+    @include block(250px, 100%);
     @include border();
     position: fixed;
     left: 0px;
@@ -34,14 +34,24 @@ export default {
     .header {
       height: 60px;
       @include border();
-      margin-left: 160px;
-      margin-top: -10px;
+      margin-left: 250px;
+    }
+    .breadcrumb {
+      height: 60px;
+      @include border();
+      margin-left: 250px;
     }
     .content {
       @include border();
-      margin-left: 160px;
-      background-color: #000;
+      margin-left: 250px;
     }
   }
 }
+</style>
+
+<style>
+  body {
+    background-color: rgb(25, 25, 41);
+    margin: 0px;
+  }
 </style>
