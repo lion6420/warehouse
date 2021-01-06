@@ -1,0 +1,28 @@
+//general color
+$color-white: #fff;
+$color-yellow: #D69721;
+$color-azure: #4D94BB;
+$color-red: #C45857;
+
+//component color
+$border-color: #d3d3d3;
+
+//background
+$background-color: #000;
+
+//font
+$aphabet: MS Sans Serif;
+$zh: Microsoft JhengHei;
+
+
+@mixin block($width: 0, $height: auto, $radius: 0) {
+  width: $width;
+  height: $height;
+  border-radius: $radius;
+}
+
+@mixin border($width: 1px, $color: $border-color, $style: solid) {
+  border-width: $width;
+  border-color: $color;
+  border-style: $style;
+}
