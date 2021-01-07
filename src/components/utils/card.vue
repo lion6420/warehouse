@@ -34,7 +34,7 @@ export default {
           color = 'linear-gradient(to right, #4630B4, #382597)'
           break
         case 'azure':
-          color = 'linear-gradient(to right, #609EC1, #4D94BB)'
+          color = 'linear-gradient(to right, #429AD5, #3B91CA)'
           break
         case 'yellow':
           color = 'linear-gradient(to right, #DAA33B, #D69721)'
