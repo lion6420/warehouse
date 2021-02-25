@@ -12,7 +12,4 @@ export default {
 
 <style lang="scss" module>
 @import '@/styles/general.scss';
-.wrapper {
-
-}
 </style>

@@ -16,7 +16,7 @@ $aphabet: MS Sans Serif;
 $zh: Microsoft JhengHei;
 
 :root {
-  --bg-color: rgb(20, 20, 27);
+  --bg-color: rgb(27, 27, 34);
   --bg-color-snd: rgb(37, 39, 49);
   --bg-color-trd: rgb(64, 68, 87);
 
@@ -24,6 +24,8 @@ $zh: Microsoft JhengHei;
 
   --text-color: rgb(184, 184, 184);
   --text-color-hover: rgb(230, 230, 230);
+
+  --font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 [theme="light"] {
   --bg-color: #fff;

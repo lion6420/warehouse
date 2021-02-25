@@ -10,9 +10,19 @@ export default {
   components: {
     sidebar,
   },
+  props: {
+    menu_type: {
+      type: String,
+      require: true,
+      default() {
+        return 'achievement'
+      }
+    }
+  },
   data() {
     return {
-      menu: [
+      menu: [],
+      menu_achievement: [
         {
           type: 'dropdown',
           label: '收貨',
@@ -68,7 +78,48 @@ export default {
             }
           ]
         }
+      ],
+      menu_material: [
+        {
+          label: '物料列表',
+          link: '/material/list',
+          icon: {
+            class: 'fas fa-list'
+          }
+        },
+        {
+          label: '物料申請',
+          link: '/material/apply',
+          icon: {
+            class: 'fas fa-shopping-cart'
+          }
+        },
+        {
+          label: '歷史紀錄',
+          link: '/material/history',
+          icon: {
+            class: 'fas fa-history'
+          }
+        }
       ]
+    }
+  },
+  created() {
+    this.getMenu()
+  },
+  methods: {
+    getMenu() {
+      if (this.menu_type === 'achievement') {
+        this.menu = this.menu_achievement
+      }
+      else if (this.menu_type === 'material') {
+        this.menu = this.menu_material
+      }
+    }
+  },
+  watch: {
+    menu_type() {
+      this.getMenu()
     }
   }
 }

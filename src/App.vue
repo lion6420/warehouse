@@ -5,7 +5,7 @@
     </div>
     <div :class="$style.body">
       <div :class="$style.sidebar" v-if="show_sidebar">
-        <sidebar></sidebar>
+        <sidebar :menu_type="menu_type"></sidebar>
       </div>
       <div :class="$style.content" :style="{'margin-left': show_sidebar ? '200px':'0px'}">
         <router-view></router-view>
@@ -26,21 +26,34 @@ export default {
   data() {
     return {
       show_sidebar: true,
+      menu_type: '',
     }
   },
   created() {
-    this.loginCheck()
+    this.showSidebarCheck()
   },
   methods: {
-    loginCheck() {
+    showSidebarCheck() {
       let path = window.location.pathname
       if (path.split('/')[1] == 'login') this.show_sidebar = false
       else this.show_sidebar = true
+    },
+    getMenuType() {
+      let path = window.location.pathname
+      const regex_achieve = new RegExp('/achievement')
+      const regex_material = new RegExp('/material')
+      if (regex_achieve.test(path)) {
+        this.menu_type = 'achievement'
+      }
+      else if (regex_material.test(path)) {
+        this.menu_type = 'material'
+      }
     }
   },
   watch: {
     "$route.path": function() {
-      this.loginCheck()
+      this.showSidebarCheck()
+      this.getMenuType()
     }
   }
 }

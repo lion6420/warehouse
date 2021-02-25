@@ -63,7 +63,7 @@ export default {
     @include block(100%, 50px);
     text-align: center;
     font-size: 35px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: var(--font-family);
     margin-bottom:10px;
   }
   .username {
@@ -103,7 +103,7 @@ export default {
     text-align: center;
     margin: 10px auto;
     background-color: $color-azure;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:var(--font-family);
     cursor: pointer;
   }
 }

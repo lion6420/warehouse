@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Login from '@/components/common/login'
 import Dashboard from '@/components/dashboard/dashboard-index'
 import Stock from '@/components/stock/stock-index'
+import Material_List from '@/components/material/material_list/material-list-index'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -33,6 +34,11 @@ const routes = [
       requireAuth: true,
     }
   },
+  {
+    path: '/material/list',
+    name: 'material_list',
+    component: Material_List,
+  }
 ]
 
 const router = new VueRouter({

@@ -13,7 +13,7 @@
       <router-link :class="$style.router_link" to="/dashboard">人力管理</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/dashboard">物料訊息</router-link>
+      <router-link :class="$style.router_link" to="/material/list">物料訊息</router-link>
     </div>
 
     <div v-if="isLoggedIn" :class="$style.header_right">
