@@ -12,7 +12,7 @@
       </div>
     </div>
     <div :class="$style.chart" :id="'trend_' + _uid.toString()"></div>
-    <hr style="border-color:rgb(129, 129, 129);margin:0px"/>
+    <hr style="border-color:#5f5f5f;margin:0px"/>
     <div :class="$style.dashboard_rate">
       <dashboard-rate></dashboard-rate>
     </div>
@@ -33,21 +33,22 @@ export default {
         'background-color': 'rgb(89, 93, 117)',
         'color':'#fff',
       },
-      trendChart: null
     }
   },
   mounted() {
-    var self = this
-    this.$nextTick(function afterMounted() {
-      self.plotTrendChart()
-    })
+    this.plotTrendChart()
   },
   methods: {
     plotTrendChart() {
       const option = this.getTrendChartOption()
       var DOM = document.getElementById('trend_' + this._uid.toString())
-      this.trendChart = echarts.init(DOM)
-      this.trendChart.setOption(option)
+      let trendChart = echarts.init(DOM)
+      trendChart.setOption(option)
+
+      this.resizeHandler = function() {
+        trendChart.resize()
+      }
+      window.addEventListener('resize', this.resizeHandler)
     },
     getTrendChartOption() {
       let option = {
@@ -87,11 +88,14 @@ export default {
       return option
     }
   },
+  destroyed() {
+    window.removeEventListener('resize', this.resizeHandler)
+  }
 }
 </script>
 
 <style lang="scss" module>
-@import '@/styles/general/general.module.scss';
+@import '@/styles/general.scss';
 .wrapper {
   @include block(100%, $radius: 10px);
   background-color: rgb(37, 39, 49);

@@ -3,6 +3,7 @@ $color-white: #fff;
 $color-yellow: #D69721;
 $color-azure: #4D94BB;
 $color-red: #C45857;
+$color-green: #0E9A36;
 
 //component color
 $border-color: #d3d3d3;
@@ -13,6 +14,20 @@ $background-color: #000;
 //font
 $aphabet: MS Sans Serif;
 $zh: Microsoft JhengHei;
+
+:root {
+  --bg-color: rgb(20, 20, 27);
+  --bg-color-snd: rgb(37, 39, 49);
+  --bg-color-trd: rgb(64, 68, 87);
+
+  --bg-color-opposite: rgb(219, 219, 219);
+
+  --text-color: rgb(184, 184, 184);
+  --text-color-hover: rgb(230, 230, 230);
+}
+[theme="light"] {
+  --bg-color: #fff;
+}
 
 
 @mixin block($width: 0, $height: auto, $radius: 0) {

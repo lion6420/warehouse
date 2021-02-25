@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import '@/styles/general/general.module.scss';
+@import './common/general.scss';
 .percentage {
   .rate {
     position: relative;

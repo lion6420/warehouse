@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style lang="scss" module>
-@import '@/styles/general/general.module.scss';
+@import './common/general.scss';
 .card {
   @include block(200px, 100px, $radius: 5px);
 }
