@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.wrapper">
-    <card width="380px" height="160px" :color="color">
+    <card width="100%" height="160px" :color="color">
       <template slot="content">
         <div :class="$style.amount">{{amount}}</div>
         <div :class="$style.label">{{label}}</div>
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang='scss' module>
-@import '@/styles/general/general.module.scss';
+@import '@/styles/general.scss';
 .wrapper {
   color: #fff;
   .amount {

@@ -1,14 +1,13 @@
 <template>
   <div id="app" :class="$style.app">
-    <div :class="$style.sidebar"></div>
+    <div :class="$style.header">
+      <headbar></headbar>
+    </div>
     <div :class="$style.body">
-      <div :class="$style.header">
-        <navbar :menus="header_menu"></navbar>
+      <div :class="$style.sidebar" v-if="show_sidebar">
+        <sidebar :menu_type="menu_type"></sidebar>
       </div>
-      <div :class="$style.breadcrumb_area">
-        <breadcrumb style="margin-left:30px" :menus="breadcrumb_menu"></breadcrumb>
-      </div>
-      <div :class="$style.content">
+      <div :class="$style.content" :style="{'margin-left': show_sidebar ? '200px':'0px'}">
         <router-view></router-view>
       </div>
     </div>
@@ -16,97 +15,78 @@
 </template>
 
 <script>
-import navbar from './components/utils/navbar'
-import breadcrumb from './components/utils/breadcrumb'
+import headbar from '@/components/views/header'
+import sidebar from '@/components/views/sidebar'
 export default {
   name: 'App',
   components: {
-    navbar,
-    breadcrumb,
+    headbar,
+    sidebar,
   },
   data() {
     return {
-      header_menu:[
-        {
-          label: 'Dashboard',
-          link: '/dashboard',
-          style: {
-            position: 'relative',
-            top: '16px',
-            'font-size': '14px',
-          }
-        },
-        {
-          label: 'User',
-          link: '/dashboard',
-          style: {
-            position: 'relative',
-            top: '16px',
-            'font-size': '14px',
-          }
-        },
-        {
-          label: 'Setting',
-          link: '/dashboard',
-          style: {
-            position: 'relative',
-            top: '16px',
-            'font-size': '14px',
-          }
-        },
-      ],
-      breadcrumb_menu: [
-        {
-          label: 'Home',
-          link: '/'
-        },
-        {
-          label: 'Dashboad',
-          link: '/dashboard',
-        },
-      ]
+      show_sidebar: true,
+      menu_type: '',
+    }
+  },
+  created() {
+    this.showSidebarCheck()
+  },
+  methods: {
+    showSidebarCheck() {
+      let path = window.location.pathname
+      if (path.split('/')[1] == 'login') this.show_sidebar = false
+      else this.show_sidebar = true
+    },
+    getMenuType() {
+      let path = window.location.pathname
+      const regex_achieve = new RegExp('/achievement')
+      const regex_material = new RegExp('/material')
+      if (regex_achieve.test(path)) {
+        this.menu_type = 'achievement'
+      }
+      else if (regex_material.test(path)) {
+        this.menu_type = 'material'
+      }
+    }
+  },
+  watch: {
+    "$route.path": function() {
+      this.showSidebarCheck()
+      this.getMenuType()
     }
   }
 }
 </script>
 
 <style lang="scss" module>
-@import '@/styles/general/general.module.scss';
+@import '@/styles/general.scss';
 .app {
   @include block(100%); //width: 100%, height: auto;
-  .sidebar {
-    @include block(250px, 100%);
-    background-color: rgb(52, 52, 65);
-    border-right: 1px solid $border-color-grey;
+  .header {
+    height: 60px;
     position: fixed;
-    left: 0px;
-    top: 0px;
-    z-index: 1;
+    z-index: 4;
   }
   .body {
     @include block(100%);
-    .header {
-      height: 50px;
-      margin-left: 250px;
-      border-bottom: 1px solid $border-color-grey;
-      background-color: rgb(52, 52, 65);
-    }
-    .breadcrumb_area {
-      height: 40px;
-      margin-left: 250px;
-      background-color: rgb(52, 52, 65);
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    .sidebar {
+      @include block(200px, 100%);
+      box-shadow: 1px 1px 5px 1px rgb(39, 39, 39);
+      position: fixed;
+      bottom: 0px;
     }
     .content {
-      @include border();
-      margin-left: 250px;
+      @include block(100%);
+      margin-top:60px;
     }
   }
 }
-</style>
-
-<style>
-  body {
-    background-color: rgb(25, 25, 41);
-    margin: 0px;
-  }
+body {
+  background-color: var(--bg-color);
+  margin: 0px;
+}
 </style>
