@@ -38,6 +38,9 @@ const routes = [
     path: '/material/list',
     name: 'material_list',
     component: Material_List,
+    meta: {
+      requireAuth: true,
+    }
   }
 ]
 
