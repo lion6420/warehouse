@@ -13,7 +13,8 @@
       :class="$style.inputStyle"
       :placeholder="placeholder"
       :value="value"
-      @input="$emit('input', $event.target.value)" />
+      @input="$emit('input', $event.target.value)"
+      :style="{height: height ? height:'30px', 'text-align':textAlign?textAlign:'default'}" />
       <div :class="$style.addonAfter">
         <slot name="addonAfter"></slot>
       </div>
@@ -33,6 +34,14 @@ export default {
       default() {
         return '200px'
       }
+    },
+    height: {
+      type: String,
+      require: false,
+    },
+    textAlign: {
+      type: String,
+      require: false,
     },
     placeholder: {
       type: String,

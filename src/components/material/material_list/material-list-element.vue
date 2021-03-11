@@ -16,9 +16,15 @@
       headerTextAlign="center"
       headerColor="#AFAFAF"
       borderColor="#4B4B4B">
-        <template slot="operation">
+        <template slot="operation" slot-scope="scope">
           <div :class="$style.list_operation">
-            <div :class="$style.operation_plus"><span class="fas fa-plus"></span></div>
+            <!--add order-->
+            <div v-if="!scope.data['ordered']" :class="$style.operation_plus" @click="add_order(scope.data)"><span class="fas fa-plus"></span></div>
+            <!--remove order-->
+            <div v-if="scope.data['ordered']" :class="$style.operation_minus" @click="remove_order(scope.data['PN'])">
+              <span class="fas fa-times-circle"></span>
+            </div>
+            <!--information-->
             <div :class="$style.operation_detail"><span class="fas fa-info-circle"></span></div>
           </div>
         </template>
@@ -58,68 +64,118 @@ export default {
       tableData: [
         {
           PN: '700-203-21',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 1000,
           stock: 5000,
+          ordered: false,
         },
         {
           PN: '700-222-31',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 100,
           stock: 500,
+          ordered: false,
         },
         {
           PN: '700-302-22',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 10,
           stock: 5000,
+          ordered: false,
         },
         {
           PN: '700-540-11',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 400,
           stock: 5000,
+          ordered: false,
         },
         {
           PN: '800-205-61',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 1000,
           stock: 50,
+          ordered: false,
         },
         {
           PN: '800-233-71',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 1000,
           stock: 5000,
+          ordered: false,
         },
         {
           PN: '800-223-31',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 10,
           stock: 50,
+          ordered: false,
         },
         {
           PN: '700-253-51',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 400,
           stock: 500,
+          ordered: false,
         },
         {
           PN: '700-203-21',
+          type: 'A',
           WO: '80027382',
           time: '2021-01-22 10:10:00',
           demand: 325,
           stock: 500,
+          ordered: false,
         }
       ],
+    }
+  },
+  created() {
+    this.check_ordered()
+  },
+  methods: {
+    check_ordered() {
+      const ordered_pn = this.$store.getters.ordered_pn
+      for (let i=0; i<this.tableData.length; i++) {
+        if (ordered_pn[this.tableData[i]['PN']]) {
+          this.tableData[i]['ordered'] = true
+        }
+        else {
+          this.tableData[i]['ordered'] = false
+        }
+      }
+    },
+    add_order(order) {
+      this.$store.dispatch('add_order', order)
+    },
+    remove_order(PN) {
+      this.$store.dispatch('remove_order', PN)
+    },
+  },
+  watch: {
+    orderAmount() {
+      this.check_ordered()
+    }
+  },
+  computed: {
+    orderAmount() {
+      return this.$store.getters.orderAmount
     }
   }
 }
@@ -147,6 +203,10 @@ export default {
       text-align: center;
       .operation_plus {
         color: $color-green;
+        cursor: pointer;
+      }
+      .operation_minus {
+        color: $color-red;
         cursor: pointer;
       }
       .operation_detail {

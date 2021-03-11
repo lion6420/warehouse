@@ -13,7 +13,7 @@
       <router-link :class="$style.router_link" to="/dashboard">人力管理</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/material/list">物料訊息</router-link>
+      <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff'}:{}">物料訊息</router-link>
     </div>
 
     <div v-if="isLoggedIn" :class="$style.header_right">
@@ -39,8 +39,12 @@ export default {
     activeCheck() {
       const path = window.location.pathname
       const regex_dashboard = new RegExp('/dashboard')
+      const regex_material = new RegExp('/material')
       if (regex_dashboard.test(path)) {
         this.active = 'dashboard'
+      }
+      else if (regex_material.test(path)) {
+        this.active = 'material'
       }
       else {
         this.active = ''

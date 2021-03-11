@@ -4,12 +4,13 @@
       <headbar></headbar>
     </div>
     <div :class="$style.body">
-      <div :class="$style.sidebar" v-if="show_sidebar">
+      <div :class="$style.sidebar" v-if="isLoggedIn">
         <sidebar :menu_type="menu_type"></sidebar>
       </div>
-      <div :class="$style.content" :style="{'margin-left': show_sidebar ? '200px':'0px'}">
+      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? '200px':'0px'}">
         <router-view></router-view>
       </div>
+      <order-cart v-if="isLoggedIn"></order-cart>
     </div>
   </div>
 </template>
@@ -17,27 +18,24 @@
 <script>
 import headbar from '@/components/views/header'
 import sidebar from '@/components/views/sidebar'
+import orderCart from '@/components/material/order_cart/order-cart-index'
+
 export default {
   name: 'App',
   components: {
     headbar,
     sidebar,
+    orderCart,
   },
   data() {
     return {
-      show_sidebar: true,
       menu_type: '',
     }
   },
   created() {
-    this.showSidebarCheck()
+    this.getMenuType()
   },
   methods: {
-    showSidebarCheck() {
-      let path = window.location.pathname
-      if (path.split('/')[1] == 'login') this.show_sidebar = false
-      else this.show_sidebar = true
-    },
     getMenuType() {
       let path = window.location.pathname
       const regex_achieve = new RegExp('/achievement')
@@ -50,12 +48,16 @@ export default {
       }
     }
   },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
   watch: {
     "$route.path": function() {
-      this.showSidebarCheck()
       this.getMenuType()
     }
-  }
+  },
 }
 </script>
 
