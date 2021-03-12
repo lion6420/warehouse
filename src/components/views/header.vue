@@ -15,6 +15,9 @@
     <div :class="$style.header_left">
       <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff'}:{}">物料訊息</router-link>
     </div>
+    <div :class="$style.header_left">
+      <router-link :class="$style.router_link" to="/stock_efficiency" :style="active === 'stock_efficiency'?{color: '#fff'}:{}">儲位效能</router-link>
+    </div>
 
     <div v-if="isLoggedIn" :class="$style.header_right">
       <div style="cursor:pointer" @click="logout">
@@ -40,11 +43,15 @@ export default {
       const path = window.location.pathname
       const regex_dashboard = new RegExp('/dashboard')
       const regex_material = new RegExp('/material')
+      const regex_stock_efficiency = new RegExp('/stock_efficiency')
       if (regex_dashboard.test(path)) {
         this.active = 'dashboard'
       }
       else if (regex_material.test(path)) {
         this.active = 'material'
+      }
+      else if (regex_stock_efficiency.test(path)) {
+        this.active = 'stock_efficiency'
       }
       else {
         this.active = ''

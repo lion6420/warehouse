@@ -4,6 +4,8 @@ import Login from '@/components/common/login'
 import Dashboard from '@/components/dashboard/dashboard-index'
 import Stock from '@/components/stock/stock-index'
 import Material_List from '@/components/material/material_list/material-list-index'
+import Material_History from '@/components/material/material_apply_history/material-history-index'
+import Stock_Efficiency from '@/components/stock_efficiency/stock-adjust-index'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -41,7 +43,20 @@ const routes = [
     meta: {
       requireAuth: true,
     }
-  }
+  },
+  {
+    path: '/material/history',
+    name: 'material_history',
+    component: Material_History,
+    meta: {
+      requireAuth: true,
+    } 
+  },
+  {
+    path: '/stock_efficiency',
+    name: 'stock_efficiency',
+    component: Stock_Efficiency,
+  },
 ]
 
 const router = new VueRouter({
