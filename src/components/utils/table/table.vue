@@ -25,12 +25,12 @@
         :class="$style.tableRow"
         @click="toggleRow(g_index, tbodyGroup?groupIndexTranslation(g_index):g_index)">
         <td v-for="(header,h_index) in propList" :key="h_index"
-          :rowspan="spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[g_index]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan"
-          :colspan="spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[g_index]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).colspan"
+          :rowspan="spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan"
+          :colspan="spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).colspan"
           :style="[{
             'border-left': showBorder(h_index),
             'border-top': '1px ' + borderColor + ' solid',
-            'display': spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[g_index]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan === 0?'none':'default',
+            'display': spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan === 0?'none':'default',
             'background-color': backgroundColor?backgroundColor(header.prop, each_data[header.prop]):bodyStriped(r_index)},
             header.style,
             if_sticky(header)]">
@@ -225,19 +225,7 @@ export default {
     this.headerLevel = this.getHeaderlevel() //計算表頭有多少level
     this.getPropList() //處理多級表頭props問題
   },
-  mounted() {
-    this.initTheme()
-  },
   methods: {
-    initTheme() {
-      let DOMElement = document.getElementById('tableContainer_' + this._uid.toString())
-      if (!this.rowHover) {
-        DOMElement.setAttribute('hover-effect', 'off')
-      }
-      else {
-        DOMElement.setAttribute('hover-effect', 'on')
-      }
-    },
     //table style
     tableWrapperStyle() {
       var style = {overflowX:'auto'}
@@ -418,18 +406,22 @@ export default {
 
     //body group
     makeTableDataGroup(groupNumber, groupSize) {
+      let bypass_number = groupSize[0]
       var start = 0
-      var end = groupSize[start]
+      var end = bypass_number
       for (var i=0; i<groupNumber; i++) {
-        start+=groupSize[i]
-        end = start+groupSize[i+1]
+        bypass_number = groupSize[end]
+        start = end
+        end += bypass_number
       }
       return this.data.slice(start, end)
     },
     groupIndexTranslation(g_index) {
       var real_index = 0
+      let bypass_number = this.tbodyGroup.groupSize[real_index]
       for (var i=0; i<g_index; i++) {
-        real_index+=this.tbodyGroup.groupSize[i]
+        real_index += bypass_number
+        bypass_number = this.tbodyGroup.groupSize[real_index]
       }
       return real_index
     },
