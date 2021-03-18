@@ -66,7 +66,18 @@ export default {
     activeCheck() {
       const path = window.location.pathname
       let htmlElement = document.getElementById('dropdown-single-item_' + this._uid.toString())
-      if (path === this.link) {
+
+      //handle multi-slash
+      var real_path = ''
+      const temp_path = this.$router.history.base + this.link
+      for (let i=0; i<temp_path.length; i++) {
+        if (i>0 && temp_path[i] == '/' && temp_path[i-1] == '/') continue
+        else {
+          real_path+=temp_path[i]
+        }
+      }
+      
+      if (path === real_path) {
         htmlElement.setAttribute('sidebar-active', 'active')
       }
       else {

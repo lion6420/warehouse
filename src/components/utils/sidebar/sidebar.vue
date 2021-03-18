@@ -83,14 +83,13 @@ export default {
 <style lang="scss" module>
 @import '../common/general.scss';
 .sidebar {
-  @include block(100%, 100%);
+  @include block(100%);
   position: fixed;
   top: 0px;
   left: 0px;
   bottom: 0px;
   z-index: 3;
   transition: max-width 0.3s linear;
-  background-color: var(--bg-color);
 }
 @media screen and (max-width: 700px) {
   .sidebar {
