@@ -2,7 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '@/components/common/login'
 import Dashboard from '@/components/dashboard/dashboard-index'
-import Stock from '@/components/stock/stock-index'
+import Stock_Man_Efficiency from '@/components/stock/man_efficiency/index'
+
+
 import Material_List from '@/components/material/material_list/material-list-index'
 import Material_History from '@/components/material/material_apply_history/material-history-index'
 import Stock_Efficiency from '@/components/stock_efficiency/stock-adjust-index'
@@ -29,9 +31,9 @@ const routes = [
     }
   },
   {
-    path: '/achievement/stock/:type',
-    name: 'stock',
-    component: Stock,
+    path: '/achievement/stock/man_efficiency',
+    name: 'stock_man_efficiency',
+    component: Stock_Man_Efficiency,
     meta: {
       requireAuth: true,
     }

@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.percentage" :style="{width: width}">
-    <div :class="$style.rate" :style="{width: rate_width.toString() + 'px', height: height, 'background-color': color}"></div>
+    <div :class="$style.rate" :style="{width: percentage + '%', height: height, 'background-color': color}"></div>
     <div :class="$style.back" :style="{height: height, 'margin-top': '-' + height}" :id="'back_' + _uid.toString()"></div>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
       type: String,
       require: false,
       default() {
-        return '200px'
+        return '100%'
       }
     },
     height: {
@@ -39,21 +39,12 @@ export default {
   },
   data() {
     return {
-      rate_width: 0,
     }
   },
   mounted() {
-    var self = this
-    this.$nextTick(function afterMounted() {
-      self.calWidth()
-    })
   },
   methods: {
-    calWidth() {
-      let total_width =  document.getElementById('back_' + this._uid.toString()).offsetWidth
-      this.rate_width = total_width * (this.percentage/100)
-    }
-  }
+  },
 }
 </script>
 

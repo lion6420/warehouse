@@ -43,9 +43,9 @@ export default {
     return {
       percentageColor: ['#D69721', '#4D94BB', '#C45857', '#0E9A36'],
       headers: [
-        {prop: 'WHS', label: '倉庫', style: {width: '150px'}},
-        {prop: 'AREA', label: '區域', style: {width: '150px'}},
-        {prop: 'achievement', label: '達成率', style: {width: '300px'}},
+        {prop: 'WHS', label: '倉庫', style: {'min-width': '50px'}},
+        {prop: 'AREA', label: '區域', style: {'min-width': '50px'}},
+        {prop: 'achievement', label: '達成率', style: {'min-width': '150px', 'max-width': '200px'}},
         {prop: 'amount', label: '員工人數 (人)'},
         {prop: 'overTime_avg', label: '平均超時 (min)'},
       ],
@@ -114,7 +114,7 @@ export default {
 @import '@/styles/general.scss';
 .wrapper {
   @include block(100%, $radius: 10px);
-  color: #fff;
+  color: var(--text-color-light);
   text-align: center;
   background-color: rgb(37, 39, 49);
   box-shadow: 0px 0px 1px 1px rgb(37, 39, 49);

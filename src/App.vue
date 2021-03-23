@@ -73,7 +73,6 @@ export default {
   .body {
     @include block(100%);
     display: flex;
-    overflow: hidden;
     flex-wrap: wrap;
     .sidebar {
       @include block(200px, 100%);
@@ -83,6 +82,7 @@ export default {
     }
     .content {
       @include block(100%);
+      overflow: hidden;
       margin-top:60px;
     }
   }

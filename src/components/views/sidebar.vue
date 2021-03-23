@@ -38,7 +38,8 @@ export default {
               label: '歷史查詢'
             },
             {
-              label: '人員效率'
+              label: '人員效率',
+              link: '/achievement/stock/man_efficiency',
             }
           ]
         },

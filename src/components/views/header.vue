@@ -7,7 +7,7 @@
       <span style="font-size:20px;position:relative;top:-2px">Warehouse</span>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/achievement/dashboard" :style="active === 'dashboard'?{color: '#fff'}:{}">達成總覽</router-link>
+      <router-link :class="$style.router_link" to="/achievement/dashboard" :style="active === 'achievement'?{color: '#fff'}:{}">達成狀態</router-link>
     </div>
     <div :class="$style.header_left">
       <router-link :class="$style.router_link" to="/dashboard">人力管理</router-link>
@@ -41,11 +41,11 @@ export default {
   methods: {
     activeCheck() {
       const path = window.location.pathname
-      const regex_dashboard = new RegExp('/dashboard')
+      const regex_dashboard = new RegExp('/achievement')
       const regex_material = new RegExp('/material')
       const regex_stock_efficiency = new RegExp('/stock_efficiency')
       if (regex_dashboard.test(path)) {
-        this.active = 'dashboard'
+        this.active = 'achievement'
       }
       else if (regex_material.test(path)) {
         this.active = 'material'
