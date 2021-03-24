@@ -7,16 +7,16 @@
       <span style="font-size:20px;position:relative;top:-2px">Warehouse</span>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/achievement/dashboard" :style="active === 'achievement'?{color: '#fff'}:{}">達成狀態</router-link>
+      <router-link :class="$style.router_link" to="/achievement/dashboard" :style="active === 'achievement'?{color: '#fff', 'font-weight': 'bold'}:{}">達成狀態</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/dashboard">人力管理</router-link>
+      <router-link :class="$style.router_link" to="/human_resources/maintenance" :style="active === 'human_resources'?{color: '#fff', 'font-weight': 'bold'}:{}">人力管理</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff'}:{}">物料訊息</router-link>
+      <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff', 'font-weight': 'bold'}:{}">物料訊息</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/stock_efficiency" :style="active === 'stock_efficiency'?{color: '#fff'}:{}">儲位效能</router-link>
+      <router-link :class="$style.router_link" to="/stock_efficiency" :style="active === 'stock_efficiency'?{color: '#fff', 'font-weight': 'bold'}:{}">儲位效能</router-link>
     </div>
 
     <div v-if="isLoggedIn" :class="$style.header_right">
@@ -42,10 +42,14 @@ export default {
     activeCheck() {
       const path = window.location.pathname
       const regex_dashboard = new RegExp('/achievement')
+      const regex_human_resources = new RegExp('/human_resources')
       const regex_material = new RegExp('/material')
       const regex_stock_efficiency = new RegExp('/stock_efficiency')
       if (regex_dashboard.test(path)) {
         this.active = 'achievement'
+      }
+      else if (regex_human_resources.test(path)) {
+        this.active = 'human_resources'
       }
       else if (regex_material.test(path)) {
         this.active = 'material'

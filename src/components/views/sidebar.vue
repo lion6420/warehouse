@@ -80,6 +80,22 @@ export default {
           ]
         }
       ],
+      menu_human_resources: [
+        {
+          label: '人力維護',
+          link: '/human_resources/maintenance',
+          icon: {
+            class: 'fas fa-wrench'
+          }
+        },
+        {
+          label: '人力新增',
+          link: '/human_resources/upload',
+          icon: {
+            class: 'fas fa-cloud-upload-alt'
+          }
+        },
+      ],
       menu_material: [
         {
           label: '物料列表',
@@ -112,6 +128,9 @@ export default {
     getMenu() {
       if (this.menu_type === 'achievement') {
         this.menu = this.menu_achievement
+      }
+      else if (this.menu_type === 'human_resources') {
+        this.menu = this.menu_human_resources
       }
       else if (this.menu_type === 'material') {
         this.menu = this.menu_material
