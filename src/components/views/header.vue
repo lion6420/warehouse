@@ -10,7 +10,7 @@
       <router-link :class="$style.router_link" to="/achievement/dashboard" :style="active === 'achievement'?{color: '#fff', 'font-weight': 'bold'}:{}">達成狀態</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/hr/maintenance" :style="active === 'human_resources'?{color: '#fff', 'font-weight': 'bold'}:{}">人力管理</router-link>
+      <router-link :class="$style.router_link" to="/hr/maintenance" :style="active === 'hr'?{color: '#fff', 'font-weight': 'bold'}:{}">人力管理</router-link>
     </div>
     <div :class="$style.header_left">
       <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff', 'font-weight': 'bold'}:{}">物料訊息</router-link>
