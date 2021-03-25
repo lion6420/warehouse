@@ -116,26 +116,26 @@ export default {
       border: 1px rgb(129, 129, 129);
       margin-top: 20px;
       .operator_day {
-        @include block(50px, 20px);
+        @include block(50px, 30px);
         @include border();
         text-align: center;
-        padding:7px 3px;
+        padding:3px 3px;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         cursor: pointer;
       }
       .operator_month {
-        @include block(50px, 20px);
+        @include block(50px, 30px);
         @include border();
         text-align: center;
-        padding:7px 3px;
+        padding:3px 3px;
         cursor: pointer;
       }
       .operator_year {
-        @include block(50px, 20px);
+        @include block(50px, 30px);
         @include border();
         text-align: center;
-        padding:7px 3px;
+        padding:3px 3px;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
         cursor: pointer;

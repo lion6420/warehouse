@@ -2,15 +2,17 @@
   <div :class="$style.wrapper" :id="'single-item_' + _uid.toString()">
     <div :class="$style.activebar"></div>
     <router-link :to="link" :class="$style.btn" :id="'item-btn_' + _uid.toString()"
-      :style="[itemStyle, {height: height.toString() + 'px'}]">
-      <span :class="[$style.baseBtn_icon, icon.class]">{{icon.label}}</span>
+      :style="[itemStyle]">
+      <div :class="[$style.baseBtn_icon, icon.class]">{{icon.label}}</div>
       <div :class="$style.btn_label"><span style="position:relative; top:12px">{{label}}</span></div>
+      <div style="width:20%"></div>
     </router-link>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'single-item',
   props: {
     label: {
       type: String,
@@ -37,13 +39,6 @@ export default {
         return ''
       }
     },
-    showSidebar: {
-      type: Boolean,
-      require: false,
-      default() {
-        return false
-      }
-    },
     theme: {
       type: String,
       require: false,
@@ -51,13 +46,9 @@ export default {
   },
   data() {
     return {
-      width: 180,
-      height: 50,
     }
   },
   created() {
-    if (this.itemStyle.width && typeof(this.itemStyle.width) === 'number') this.width = this.itemStyle.width
-    if (this.itemStyle.height && typeof(this.itemStyle.height) === 'number') this.height = this.itemStyle.height
   },
   mounted() {
     this.activeCheck()
@@ -66,7 +57,7 @@ export default {
     activeCheck() {
       const path = window.location.pathname
       let htmlElement = document.getElementById('single-item_' + this._uid.toString())
-      
+
       //handle multi-slash
       var real_path = ''
       const temp_path = this.$router.history.base + this.link
@@ -76,8 +67,8 @@ export default {
           real_path+=temp_path[i]
         }
       }
-
-      if (path === real_path) {
+      const regex_path = new RegExp(path)
+      if (regex_path.test(real_path)) {
         htmlElement.setAttribute('sidebar-active', 'active')
       }
       else {
@@ -86,15 +77,6 @@ export default {
     },
   },
   watch: {
-    showSidebar() {
-      let DOM = document.getElementById('single-item_' + this._uid.toString())
-      if (this.showSidebar) {
-        DOM.style.maxWidth = '100%'
-      }
-      else {
-        DOM.style.maxWidth = '0px'
-      }
-    },
     "$route.path": function() {
       this.activeCheck()
     }
@@ -106,9 +88,9 @@ export default {
 @import '../common/general.scss';
 @import './sidebar-style.scss';
 .wrapper {
-  @include block(100%);
+  @include block(200px, $sidebar-item-height);
   display: flex;
-  background-color: var(--sidebar-bg-color);
+  background-color: transparent;
   cursor: pointer;
   .activebar {
     @include block(4px, $sidebar-item-height);
@@ -117,17 +99,19 @@ export default {
   .btn {
     @include block(100%);
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     text-decoration: none;
     color: var(--sidebar-text-color);
     font-weight: var(--sidebar-text-weight);
+    text-align: center;
     .baseBtn_icon {
+      @include block(20%);
       position:relative;
       top: 15px;
-      padding: 0px 10px 0px 8px;
+      padding:0px 8px;
     }
     .btn_label {
-      @include block(100%);
+      @include block(60%);
     }
   }
 }

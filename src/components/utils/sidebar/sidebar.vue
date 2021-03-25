@@ -88,7 +88,6 @@ export default {
   top: 0px;
   left: 0px;
   bottom: 0px;
-  z-index: 3;
   transition: max-width 0.3s linear;
 }
 @media screen and (max-width: 700px) {
@@ -99,7 +98,6 @@ export default {
     top: 0px;
     left: 0px;
     bottom: 0px;
-    z-index: 3;
   }
 }
 </style>

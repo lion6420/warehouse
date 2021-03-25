@@ -31,7 +31,7 @@
             'border-left': showBorder(h_index),
             'border-top': '1px ' + borderColor + ' solid',
             'display': spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan === 0?'none':'default',
-            'background-color': backgroundColor?backgroundColor(header.prop, each_data[header.prop]):bodyStriped(r_index)},
+            'background-color': backgroundColor?backgroundColor:bodyStriped(r_index)},
             header.style,
             if_sticky(header)]">
           <slot :name="header.prop" :data="each_data">{{each_data[header.prop]}}</slot>
@@ -198,7 +198,7 @@ export default {
       }
     },
     backgroundColor: {
-      type: Function,
+      type: String,
       require: false,
     },
     loading: {

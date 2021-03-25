@@ -80,9 +80,10 @@ export default {
   @include block(100%, $height:300px);
   border: 2px dashed rgb(177, 177, 177);
   margin-top:10px;
+  color: var(--text-color);
   cursor:pointer;
   .uploadArea_info {
-    @include block(20%);
+    @include block(40%);
     margin:auto;
     .uploadArea_title {
       font-size:30px;

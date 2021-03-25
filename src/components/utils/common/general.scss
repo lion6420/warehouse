@@ -1,22 +1,8 @@
 //general color
 $color-white: #fff;
 $color-border-light: #d3d3d3;
-$background-color: #d3d3d3;
+$background-color: #eeeeee;
 
-//header
-$header-background-color: #030038;
-$header-background-color-hover: #827FBA;
-$header-border-color-hover: #DBE833;
-$header-background-color-expand: #27245c;
-$header-nav-text-color: #fff;
-$header-logo-text-color: #fff;
-
-//sidebar
-$sidebar-background-color: #030038;
-$sidebar-background-color-light: #2d2b50;
-$sidebar-background-color-hover: #827FBA;
-$sidebar-background-color-expand: #33306e;
-$sidebar-border-color-hover: #DBE833;
 
 //btn color
 $btn-color: #0026E7;
@@ -27,7 +13,7 @@ $zh: Microsoft JhengHei;
 
 
 //Utilities
-@mixin block($width: 0, $height: auto, $radius: 0, $background-color: $color-white) {
+@mixin block($width: 0, $height: auto, $radius: 0) {
   @if ($width!=0) {
     width: $width;
   }
@@ -36,9 +22,6 @@ $zh: Microsoft JhengHei;
   }
   @if $radius!=0 {
     border-radius: $radius;    
-  }
-  @if $background-color != $color-white {
-    background-color: $background-color;
   }
 }
 

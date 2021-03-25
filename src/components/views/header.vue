@@ -10,7 +10,7 @@
       <router-link :class="$style.router_link" to="/achievement/dashboard" :style="active === 'achievement'?{color: '#fff', 'font-weight': 'bold'}:{}">達成狀態</router-link>
     </div>
     <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/human_resources/maintenance" :style="active === 'human_resources'?{color: '#fff', 'font-weight': 'bold'}:{}">人力管理</router-link>
+      <router-link :class="$style.router_link" to="/hr/maintenance" :style="active === 'human_resources'?{color: '#fff', 'font-weight': 'bold'}:{}">人力管理</router-link>
     </div>
     <div :class="$style.header_left">
       <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff', 'font-weight': 'bold'}:{}">物料訊息</router-link>
@@ -42,14 +42,14 @@ export default {
     activeCheck() {
       const path = window.location.pathname
       const regex_dashboard = new RegExp('/achievement')
-      const regex_human_resources = new RegExp('/human_resources')
+      const regex_human_resources = new RegExp('/hr')
       const regex_material = new RegExp('/material')
       const regex_stock_efficiency = new RegExp('/stock_efficiency')
       if (regex_dashboard.test(path)) {
         this.active = 'achievement'
       }
       else if (regex_human_resources.test(path)) {
-        this.active = 'human_resources'
+        this.active = 'hr'
       }
       else if (regex_material.test(path)) {
         this.active = 'material'

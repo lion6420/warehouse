@@ -4,7 +4,6 @@
     :style="{
       width: width,
       border: border,
-      'font-color': fontColor
     }">
     <div :class="$style.addonBefore">
       <slot name="addonBefore"></slot>
@@ -68,10 +67,6 @@ export default {
       type: String,
       require: false,
     },
-    fontColor: {
-      type: String,
-      require: false
-    }
   },
 }
 </script>
@@ -79,23 +74,24 @@ export default {
 <style lang="scss" module>
 @import './common/general.scss';
 .inputWrapper {
+  @include block(100%, $radius: 3px);
   display: flex;
   font-size: 15px;
   border: 1px solid #c2c2c2;
-  border-radius: 3px;
+  background-color: $background-color;
+  color: #000;
   .addonBefore {
     padding:4px;
-    background-color: #fff;
   }
   .inputStyle {
     @include block(100%, 30px);
     outline: none;
     border:none;
     font-size: 15px;
+    background-color: $background-color;
   }
   .addonAfter {
     padding:4px;
-    background-color: #fff;
   }
 }
 .inputWrapper:focus-within {

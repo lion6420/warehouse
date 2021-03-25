@@ -1,21 +1,22 @@
 <template>
   <div :class="$style.wrapper" :id="'level-item_' + _uid.toString()">
-    <div :class="$style.baseBtn" :style="[itemStyle, {color: active?'yellow':'#fff'}]"
+    <div :class="$style.activebar" :style="{'background-color':active?'rgb(52, 133, 255)':''}"></div>
+    <div :class="$style.baseBtn" :style="[itemStyle, {color: active?'#fff':''}]"
       @mouseover="expandNextLevel" @mouseleave="closeNextLevel">
-      <span :class="$style.baseBtn_label">{{label}}</span>
-      <span :class="$style.baseBtn_expandIcon" class="fas fa-angle-right"></span>
+      <div :class="$style.baseBtn_icon"></div>
+      <div :class="$style.baseBtn_label">{{label}}</div>
+      <div :class="$style.baseBtn_expandIcon" class="fas fa-angle-right"></div>
     </div>
     <div :class="$style.expandArea"
       :id="'expandArea_' + _uid.toString()"
       :style="{'margin-left': width.toString() + 'px'}"
        @mouseover="expandNextLevel" @mouseleave="closeNextLevel">
-      <slot>
         <div 
           :class="$style.expandBtn"
           v-for="(expandElement, exp_index) in expandList"
-          :key="exp_index">{{expandElement}}
+          :key="exp_index">
+          <sidebar-item :root="expandElement"></sidebar-item>
         </div>
-      </slot>
     </div>
   </div>
 </template>
@@ -23,6 +24,9 @@
 <script>
 export default {
   name: 'levelItem',
+  components: {
+    sidebarItem: () => import('./sidebar-item')
+  },
   props: {
     activePath: {
       type: String,
@@ -53,44 +57,33 @@ export default {
       type: Number,
       require: false,
       default() {
-        return 160
+        return 200
       }
     },
-    showSidebar: {
-      type: Boolean,
+    width: {
+      type: Number,
       require: false,
       default() {
-        false
+        return 200
       }
     }
   },
   data() {
     return {
       active: false,
-      expandAreaHeight: 1,
-      expandDepth: 0,
-      width: 160,
       height: 50,
     }
   },
-  created() {
-    if (this.itemStyle.width && typeof(this.itemStyle.width) === 'number') this.width = this.itemStyle.width
-    if (this.itemStyle.height && typeof(this.itemStyle.height) === 'number') this.height = this.itemStyle.height
-  },
   mounted() {
-    var self = this
     this.checkActive()
-    this.$nextTick(function init() {
-      self.calExpandAreaHeight(self)
-    })
   },
   methods: {
     expandNextLevel() {
       const DOM = document.getElementById('expandArea_' + this._uid.toString())
-      DOM.style.maxHeight = (this.expandAreaHeight*this.height).toString() + 'px'
-      DOM.style.height = (this.expandAreaHeight*this.height).toString() + 'px'
-      DOM.style.maxWidth = this.expandDepth.toString() + 'px'
-      DOM.style.width = this.expandDepth.toString() + 'px'
+      DOM.style.maxHeight = (this.expandList.length*this.height).toString() + 'px'
+      DOM.style.height = (this.expandList.length*this.height).toString() + 'px'
+      DOM.style.maxWidth = this.expandWidth.toString() + 'px'
+      DOM.style.width = this.expandWidth.toString() + 'px'
     },
     closeNextLevel() {
       const DOM = document.getElementById('expandArea_' + this._uid.toString())
@@ -98,37 +91,6 @@ export default {
       DOM.style.maxWidth = '0px'
     },
 
-    // Calculate the max breathe & height by bfs
-    calExpandAreaHeight(root) {
-      var queue = []
-      var children
-      var len
-      var node
-      queue.push({
-        position: 0,
-        DOM: root,
-      })
-      while(queue.length > 0) {
-        len = queue.length
-        if (queue[0].DOM.expandWidth) { //only sum the level-item conponents
-          this.expandDepth += queue[0].DOM.expandWidth
-        }
-        for (let i=0; i<len; i++) {
-          node = queue[0] //queue.front()
-          queue.shift()
-          children = node.DOM.$children
-          if (node.position + this.expandList.length > this.expandAreaHeight) {
-            this.expandAreaHeight = node.position + this.expandList.length
-          }
-          for (let j=0; j<children.length; j++) {
-            queue.push({
-              position: (node.position + j),
-              DOM: children[j]
-            })
-          }
-        }
-      }
-    },
     checkActive() {
       if (this.activePath === '') return
       const path = window.location.pathname
@@ -140,46 +102,49 @@ export default {
     '$route'() {
       this.checkActive()
     },
-    showSidebar() {
-      let DOM = document.getElementById('level-item_' + this._uid.toString())
-      if (this.showSidebar) {
-        DOM.style.maxWidth = '100%'
-      }
-      else {
-        DOM.style.maxWidth = '0px'
-      }
-    }
   }
 }
 </script>
 
 <style lang="scss" module>
 @import '../common/general.scss';
+@import './sidebar-style.scss';
 .wrapper {
   overflow: hidden;
-  @include block(100%);
+  @include block(200px);
   display: flex;
-  color: #fff;
+  color: var(--sidebar-text-color);
+  .activebar {
+    @include block(4px, $sidebar-item-height);
+    background-color: var(--sidebar-active-bar);
+  }
   .baseBtn {
-    @include block(170px, 50px);
-    background-color: $sidebar-background-color-expand;
+    @include block(200px, 50px);
+    background-color: transparent;
     text-align: center;
-    font-size: 20px;
+    font-size: 16px;
+    display: flex;
     cursor: pointer;
     overflow: hidden;
+    text-align: center;
+    .baseBtn_icon {
+      @include block(20%);
+    }
     .baseBtn_label {
+      @include block(60%);
       position: relative;
       top: 10px;
     }
     .baseBtn_expandIcon {
+      @include block(20%);
       position: relative;
-      left: 15px;
-      top: 8px;
+      top: 18px;
       font-size: 15px;
     }
   }
   .baseBtn:hover {
-    background-color: $sidebar-background-color-hover;
+    background-color: var(--sidebar-bg-color-hover);
+    color: var(--sidebar-text-color-hover);
   }
   .expandArea {
     display: inline-block;
@@ -190,13 +155,8 @@ export default {
     max-height: 0px;
     max-width: 0px;
     transition: max-height 0.2s linear, max-width 0.1s linear;
-    z-index: 3;
-    .expandBtn {
-      @include block(170px, 50px);
-      text-align: center;
-      font-size: 20px;
-      cursor: pointer;
-    }
+    background-color: var(--sidebar-bg-color);
+    box-shadow: 0px 0px 1px 1px rgb(56, 56, 56);
   }
 }
 

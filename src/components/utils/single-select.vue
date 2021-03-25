@@ -123,15 +123,20 @@ export default {
     display: flex;
     border: 1px solid #a7a7a7;
     cursor: pointer;
+    color:#000;
+    background-color: $background-color;
     .addonBefore {
       padding: 4px;
     }
     .inputText {
-      @include block(100%, 30px, $radius: 3px);
+      @include block(100%, 30px);
       outline: none;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
       border: none;
       font-size: 15px;
       cursor: pointer;
+      background-color: $background-color;
     }
     .removeIcon {
       display: none;
@@ -145,8 +150,8 @@ export default {
   }
   
   .optionsArea {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
     transition: max-height 0.2s linear;
     box-shadow: 0px 0px 5px rgb(194, 194, 194);
     overflow-y: auto;
@@ -159,6 +164,7 @@ export default {
       @include block(100%);
       display: flex;
       cursor: pointer;
+      color:#000;
       .optionText {
         @include block(90%);
         margin-left:10px;
@@ -174,6 +180,7 @@ export default {
       overflow: hidden;
       padding: 5px 0px;
       text-align: center;
+      color:#000;
       .noDataIcon {
         font-size:30px;
         color: rgb(148, 148, 148);

@@ -1,23 +1,17 @@
 <template>
   <div :class="$style.wrapper" :id="'sidebar_item_' + _uid.toString()">
     <div v-if="root.type === 'level'">
-      <level-item :showSidebar="showSidebar" :label="root.label" :expandList="root.children" :itemStyle="root.style"
-        :expandWidth="root.children[0].style ? root.children[0].style.width : null"
+      <level-item :label="root.label" :expandList="root.children" :itemStyle="root.style"
         :activePath="root.activePath?root.activePath:''">
-        <sidebar-item
-          v-for="(child, child_index) in root.children"
-          :key="child_index"
-          :root="child">
-        </sidebar-item>
       </level-item>
     </div>
     <div v-else-if="root.type === 'dropdown'">
-      <dropdown-item :showSidebar="showSidebar" :label="root.label" :icon="root.icon" :expandList="root.children" :itemStyle="root.style"
-        :theme="theme">
+      <dropdown-item :label="root.label" :icon="root.icon" :expandList="root.children"
+        :itemStyle="root.style" :theme="theme" :activePath="root.activePath?root.activePath:''">
       </dropdown-item>
     </div>
     <div v-else>
-      <single-item :showSidebar="showSidebar" :label="root.label" :icon="root.icon" :itemStyle="root.style" :link="root.link"
+      <single-item :label="root.label" :icon="root.icon" :itemStyle="root.style" :link="root.link"
         :theme="theme">
       </single-item>
     </div>
@@ -40,13 +34,6 @@ export default {
     root: {
       type: Object,
       require: true,
-    },
-    showSidebar: {
-      type: Boolean,
-      require: false,
-      default() {
-        return false
-      }
     },
     theme: {
       type: String,

@@ -3,7 +3,7 @@
     <div
       :class="$style.baseBtn"
       @click="operateItem"
-      :style="[itemStyle, {height: height.toString() + 'px'}]">
+      :style="[itemStyle, {height: height.toString() + 'px', color: active?'#fff':'', 'font-weight':active?'bold':''}]">
       <span :class="[$style.baseBtn_icon, icon.class]">{{icon.label}}</span>
       <div :class="$style.baseBtn_label"><span style="position:relative;top:12px">{{label}}</span></div>
       <!--expand icon-->
@@ -17,19 +17,26 @@
         :class="$style.expandBtn"
         v-for="(expandElement, exp_index) in expandList"
         :key="exp_index">
-        <dropdown-single-item :theme="theme" :icon="expandElement.icon" :label="expandElement.label" :link="expandElement.link"></dropdown-single-item>
+        <sidebar-item :root="expandElement"></sidebar-item>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import dropdownSingleItem from './dropdown-single-item'
 export default {
+  name: 'dropdown-item',
   components: {
-    dropdownSingleItem,
+    sidebarItem: ()=>import('./sidebar-item')
   },
   props: {
+    activePath: {
+      type: String,
+      require: false,
+      default() {
+        return ''
+      }
+    },
     expandList: {
       type: Array,
       require: false,
@@ -69,13 +76,6 @@ export default {
         return '100%'
       }
     },
-    showSidebar: {
-      type: Boolean,
-      require: false,
-      default() {
-        false
-      }
-    }
   },
   data() {
     return {
@@ -109,38 +109,14 @@ export default {
       DOM.style.maxHeight = '0px'
     },
     activeCheck() {
+      if (this.activePath === '') return
       const path = window.location.pathname
-      let htmlElement = document.getElementById('dropdown-item_' + this._uid.toString())
-      
-      //handle multi-slash
-      var real_path = ''
-      const temp_path = this.$router.history.base + this.link
-      for (let i=0; i<temp_path.length; i++) {
-        if (i>0 && temp_path[i] == '/' && temp_path[i-1] == '/') continue
-        else {
-          real_path+=temp_path[i]
-        }
-      }
-
-      if (path === real_path) {
-        htmlElement.setAttribute('sidebar-active', 'active')
-      }
-      else {
-        htmlElement.setAttribute('sidebar-active', 'inactive')
-      }
+      const urlPattern = new RegExp(this.activePath)
+      this.active = urlPattern.test(path)
     },
   },
   watch: {
-    showSidebar() {
-      let DOM = document.getElementById('dropdown-item_' + this._uid.toString())
-      if (this.showSidebar) {
-        DOM.style.maxWidth = '100%'
-      }
-      else {
-        DOM.style.maxWidth = '0px'
-      }
-    },
-    "$route.path": function() {
+    '$route'() {
       this.activeCheck()
     }
   }
@@ -157,22 +133,24 @@ export default {
   .baseBtn {
     @include block(100%);
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     color: var(--sidebar-text-color);
     font-weight: var(--sidebar-text-weight);
     background-color: var(--sidebar-bg-color);
+    text-align: center;
     .baseBtn_icon {
+      @include block(20%);
       position:relative;
       text-align: center;
       top:15px;
       padding:0px 10px 0px 12px;
     }
     .baseBtn_label {
-      @include block(85%);
+      @include block(60%);
       margin-left:4px;
     }
     .baseBtn_dropicon {
-      @include block(15%);
+      @include block(20%);
       text-align: center;
       position:relative;
       font-size:18px;
@@ -188,6 +166,7 @@ export default {
     overflow: hidden;
     max-height: 0px;
     transition: max-height 0.1s linear;
+    background-color: var(--sidebar-dropdown-bg-color);
     .expandBtn {
       display: flex;
     }

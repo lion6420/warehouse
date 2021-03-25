@@ -4,7 +4,8 @@ import Login from '@/components/common/login'
 import Dashboard from '@/components/dashboard/dashboard-index'
 import Stock_Man_Efficiency from '@/components/stock/man_efficiency/index'
 
-import Human_Resources_Maintenance from '@/components/human_resources/hr-index'
+import Human_Resources_Maintenance from '@/components/human_resources/hr-maintenance'
+import Human_Resources_New_Data from '@/components/human_resources/hr-new-data-index'
 
 
 import Material_List from '@/components/material/material_list/material-list-index'
@@ -43,9 +44,14 @@ const routes = [
 
   // human resources
   {
-    path: '/human_resources/maintenance',
-    name: 'human_resources_maintenance',
+    path: '/hr/maintenance',
+    name: 'hr_maintenance',
     component: Human_Resources_Maintenance,
+  },
+  {
+    path: '/hr/new_data',
+    name: 'hr_new_data',
+    component: Human_Resources_New_Data,
   },
 
   // material list

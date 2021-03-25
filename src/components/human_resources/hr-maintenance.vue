@@ -1,11 +1,6 @@
 <template>
   <div :class="$style.wrapper">
     <div :class="$style.hr_list">
-      <!--拋轉確認-->
-      <a-modal v-model="transferCheck" title="拋轉確認" @ok="dataTransfer">
-        <p style="font-size:18px">資料拋轉後，<span style="color:red">人力資料將會更新至PCAS</span>，請確認</p>
-      </a-modal>
-
       <div :class="$style.contentTitle">
         <div style="width: 10%"></div>
         <div style="width: 80%;font-size: 30px">人力資料維護</div>
@@ -30,7 +25,7 @@
         :bordered="false"
         :rowHover="false"
         headerTextAlign="center"
-        headerColor="#AFAFAF"
+        headerColor="rgb(184, 184, 184)"
         borderColor="#4B4B4B">
         <template slot="header" slot-scope="scope">
           <span
@@ -130,7 +125,7 @@
         </template>
       </t-table>
     </div>
-    <a-pagination v-model="currentPage" :total="tableData_show.length" @change="changePage" style="margin-top:10px;margin-bottom:10px" />
+    <a-pagination v-model="currentPage" :total="tableData_show.length" @change="changePage" style="margin-top:10px;margin-bottom:10px;text-align: center;" />
   </div>
 </template>
 
@@ -199,16 +194,12 @@ export default {
       headers: [
         {prop: 'EMP_NO', label: '工號', style: {'font-size': '13px', 'min-width': '88px'}},
         {prop: 'EMP_NAME', label: '姓名', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'POST_TYPE', label: '崗位', style: {'font-size': '13px', 'min-width': '88px'}},
         {prop: 'SOURCE', label: '人力來源', style: {'font-size': '13px', 'min-width': '88px'}},
         {prop: 'DEPARTMENT', label: '部門名稱', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'SITE', label: '廠區', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'BU', label: 'BU', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'WHS_TYPE', label: '倉庫類型', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'AREA', label: '倉庫位置', style: {'font-size': '13px', 'min-width': '88px'}},
+        {prop: 'WHS_TYPE', label: '倉庫類型', style: {'font-size': '13px', 'min-width': '108px'}},
+        {prop: 'AREA', label: '倉庫位置', style: {'font-size': '13px', 'min-width': '108px'}},
         {prop: 'CLASS', label: '班別', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'JOB_RANK', label: '一階崗位', style: {'font-size': '13px', 'min-width': '88px'}},
-        {prop: 'JOB_NAME', label: '二階崗位', style: {'font-size': '13px', 'min-width': '88px'}},
+        {prop: 'JOB_NAME', label: '崗位', style: {'font-size': '13px', 'min-width': '88px'}},
         {prop: 'TIME', label: '歸類日期', style: {'font-size': '13px', 'min-width': '88px'}},
         {prop: 'operation', label: '操作', style: {'font-size': '13px', 'min-width': '108px'}},
       ],
@@ -216,76 +207,47 @@ export default {
       tableData_show: [],
       tableData: [
       {
-        EMP_NO: 'A123456',
+        EMP_NO: 'A123451',
         EMP_NAME: '員工A',
-        POST_TYPE: '倉庫',
         SOURCE: '正職',
         DEPARTMENT: '部門A',
-        SITE: '廠區A',
-        BU: '事業處A',
         WHS_TYPE: '成品倉',
         AREA: 'A棟',
         CLASS: '日班',
-        JOB_RANK: '崗位A',
         JOB_NAME: '崗位B',
         TIME: '2021-03-21',
       },
       {
-        EMP_NO: 'A123456',
+        EMP_NO: 'A123452',
         EMP_NAME: '員工A',
-        POST_TYPE: '倉庫',
         SOURCE: '正職',
         DEPARTMENT: '部門A',
-        SITE: '廠區A',
-        BU: '事業處A',
         WHS_TYPE: '成品倉',
         AREA: 'A棟',
         CLASS: '日班',
-        JOB_RANK: '崗位A',
         JOB_NAME: '崗位B',
         TIME: '2021-03-21',
       },
       {
-        EMP_NO: 'A123456',
+        EMP_NO: 'A123453',
         EMP_NAME: '員工A',
-        POST_TYPE: '倉庫',
         SOURCE: '正職',
         DEPARTMENT: '部門A',
-        SITE: '廠區A',
-        BU: '事業處A',
         WHS_TYPE: '成品倉',
         AREA: 'A棟',
         CLASS: '日班',
-        JOB_RANK: '崗位A',
         JOB_NAME: '崗位B',
         TIME: '2021-03-21',
-      },
-      {
-        EMP_NO: 'A123456',
-        EMP_NAME: '員工A',
-        POST_TYPE: '倉庫',
-        SOURCE: '正職',
-        DEPARTMENT: '部門A',
-        SITE: '廠區A',
-        BU: '事業處A',
-        WHS_TYPE: '成品倉',
-        AREA: 'A棟',
-        CLASS: '日班',
-        JOB_RANK: '崗位A',
-        JOB_NAME: '崗位B',
-        TIME: '2021-03-21',
-      }],
+      },],
 
       //table filter
       tableFilter: {},
       propList: [
         'EMP_NO',
         'EMP_NAME',
-        'BU',
         'WHS_TYPE',
         'AREA',
         'CLASS',
-        'JOB_RANK',
         'JOB_NAME',
       ],
       selectedEMP_NO: {},
@@ -300,8 +262,6 @@ export default {
   },
   created() {
     this.Initialization()
-    this.getData()
-    this.get_whs_job_map()
   },
   methods: {
     Initialization() {
@@ -313,15 +273,11 @@ export default {
     resetForm() {
       this.form.EMP_NO = ''
       this.form.EMP_NAME = ''
-      this.form.POST_TYPE = ''
       this.form.DEPARTMENT = ''
       this.form.SOURCE = ''
-      this.form.SITE = ''
-      this.form.BU = ''
       this.form.WHS_TYPE = ''
       this.form.AREA = ''
       this.form.CLASS = ''
-      this.form.JOB_RANK = ''
       this.form.JOB_NAME = ''
     },
     //table cell manipulate
@@ -340,26 +296,19 @@ export default {
       }
       this.form.EMP_NO = target['EMP_NO']
       this.form.EMP_NAME = target['EMP_NAME']
-      this.form.POST_TYPE = target['POST_TYPE']
       this.form.DEPARTMENT = target['DEPARTMENT']
       this.form.SOURCE = target['SOURCE']
-      this.form.SITE = target['SITE']
-      this.form.BU = target['BU']
       this.form.WHS_TYPE = target['WHS_TYPE']
       this.form.AREA = target['AREA']
       this.form.CLASS = target['CLASS']
-      this.form.JOB_RANK = target['JOB_RANK']
       this.form.JOB_NAME = target['JOB_NAME']
     },
     async editConfirm(scope) {
       const data = {
         RID: scope.data.RID,
-        POST_TYPE: this.form.POST_TYPE,
-        BU: this.form.BU,
         WHS_TYPE: this.form.WHS_TYPE,
         AREA: this.form.AREA,
         CLASS: this.form.CLASS,
-        JOB_RANK: this.form.JOB_RANK,
         JOB_NAME: this.form.JOB_NAME,
         TIME: scope.data.TIME
       }
@@ -385,11 +334,9 @@ export default {
     onTableFilter() {
       if (Object.keys(this.selectedEMP_NO).length === 0 &&
           Object.keys(this.selectedEMP_NAME).length === 0 &&
-          Object.keys(this.selectedBU).length === 0 &&
           Object.keys(this.selectedWHS_TYPE).length === 0 &&
           Object.keys(this.selectedAREA).length === 0 &&
           Object.keys(this.selectedCLASS).length === 0 &&
-          Object.keys(this.selectedJOB_RANK).length === 0 &&
           Object.keys(this.selectedJOB_NAME).length === 0) {
         this.tableData_show = this.rawData
       }
@@ -402,9 +349,6 @@ export default {
           else if (this.selectedEMP_NAME[this.rawData[i]['EMP_NAME']]) {
             this.tableData_show.push(this.rawData[i])
           }
-          else if (this.selectedBU[this.rawData[i]['BU']]) {
-            this.tableData_show.push(this.rawData[i])
-          }
           else if (this.selectedWHS_TYPE[this.rawData[i]['WHS_TYPE']]) {
             this.tableData_show.push(this.rawData[i])
           }
@@ -412,9 +356,6 @@ export default {
             this.tableData_show.push(this.rawData[i])
           }
           else if (this.selectedCLASS[this.rawData[i]['CLASS']]) {
-            this.tableData_show.push(this.rawData[i])
-          }
-          else if (this.selectedJOB_RANK[this.rawData[i]['JOB_RANK']]) {
             this.tableData_show.push(this.rawData[i])
           }
           else if (this.selectedJOB_NAME[this.rawData[i]['JOB_NAME']]) {
@@ -432,9 +373,6 @@ export default {
         case 'EMP_NAME':
           this.selectedEMP_NAME = {}
           break
-        case 'BU':
-          this.selectedBU = {}
-          break
         case 'WHS_TYPE':
           this.selectedWHS_TYPE = {}
           break
@@ -443,9 +381,6 @@ export default {
           break
         case 'CLASS':
           this.selectedCLASS = {}
-          break
-        case 'JOB_RANK':
-          this.selectedJOB_RANK = {}
           break
         case 'JOB_NAME':
           this.selectedJOB_NAME = {}
@@ -466,16 +401,12 @@ export default {
         RID: '序號',
         EMP_NO:'工號',
         EMP_NAME: '姓名',
-        POST_TYPE: '崗位',
         DEPARTMENT: '部門名稱',
         SOURCE: '人力來源',
-        SITE: '廠區',
-        BU: 'BU',
         WHS_TYPE: '倉庫類型',
         AREA: '倉庫位置',
         CLASS: '班別',
-        JOB_RANK: '一階崗位',
-        JOB_NAME: '二階崗位',
+        JOB_NAME: '崗位',
         TIME: '更新時間',
       }
       var tableData_to_download = [...this.rawData]
@@ -490,9 +421,6 @@ export default {
         case 'EMP_NAME':
           if (Object.keys(this.selectedEMP_NAME).length > 0) return '#0E4CFF'
           break
-        case 'BU':
-          if (Object.keys(this.selectedBU).length > 0) return '#0E4CFF'
-          break
         case 'WHS_TYPE':
           if (Object.keys(this.selectedWHS_TYPE).length > 0) return '#0E4CFF'
           break
@@ -501,9 +429,6 @@ export default {
           break
         case 'CLASS':
           if (Object.keys(this.selectedCLASS).length > 0) return '#0E4CFF'
-          break
-        case 'JOB_RANK':
-          if (Object.keys(this.selectedJOB_RANK).length > 0) return '#0E4CFF'
           break
         case 'JOB_NAME':
           if (Object.keys(this.selectedJOB_NAME).length > 0) return '#0E4CFF'
@@ -518,7 +443,6 @@ export default {
       if (this.BU === '') {
         this.form.WHS_TYPE = ''
         this.form.AREA = ''
-        this.form.JOB_RANK = ''
         this.form.JOB_NAME = ''
       }
     },
@@ -528,7 +452,6 @@ export default {
       else this.optionsAREA = []
       if (this.WHS_TYPE === '') {
         this.form.AREA = ''
-        this.form.JOB_RANK = ''
         this.form.JOB_NAME = ''
       }
     },
@@ -537,40 +460,19 @@ export default {
         Object.keys(this.whs_job_map[this.form.BU][this.form.WHS_TYPE][this.form.AREA]) : []
       else this.optionsJOB_RANK = []
       if (this.AREA === '') {
-        this.form.JOB_RANK = ''
         this.form.JOB_NAME = ''
       }
     },
-    JOB_RANK() {
-      if (this.form.JOB_RANK) this.optionsJOB_NAME = this.whs_job_map[this.form.BU][this.form.WHS_TYPE][this.form.AREA][this.form.JOB_RANK] ? 
-        Object.values(this.whs_job_map[this.form.BU][this.form.WHS_TYPE][this.form.AREA][this.form.JOB_RANK]) : []
-      else this.optionsJOB_NAME = []
-      if (this.JOB_RANK === '') {
-        this.form.JOB_NAME = ''
-      }
-    }
   },
-  computed: {
-    BU() {
-      return this.form.BU
-    },
-    WHS_TYPE() {
-      return this.form.WHS_TYPE
-    },
-    AREA() {
-      return this.form.AREA
-    },
-    JOB_RANK() {
-      return this.form.JOB_RANK
-    }
-  }
 }
 </script>
 
 <style lang="scss" module>
 @import '@/styles/general.scss';
 .wrapper {
-  @include block(100%);
+  @include block(98%, $radius: 5px);
+  margin: 20px auto 0px auto;
+  background-color: var(--bg-color-snd);
   .contentTitle {
     @include block(100%);
     display: flex;
@@ -579,10 +481,12 @@ export default {
     font-weight: bold;
     margin-bottom: 5px;
     color: var(--text-color);
+    text-align: center;
   }
   .hr_list {
-    @include block(100%);
-    margin-top:10px;
+    @include block(95%);
+    margin:auto;
+    text-align: center;
     .table {
       color: var(--text-color-hover);
     }

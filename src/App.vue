@@ -39,13 +39,13 @@ export default {
     getMenuType() {
       let path = window.location.pathname
       const regex_achieve = new RegExp('/achievement')
-      const regex_human_resources = new RegExp('/human_resources')
+      const regex_human_resources = new RegExp('/hr')
       const regex_material = new RegExp('/material')
       if (regex_achieve.test(path)) {
         this.menu_type = 'achievement'
       }
       else if (regex_human_resources.test(path)) {
-        this.menu_type = 'human_resources'
+        this.menu_type = 'hr'
       }
       else if (regex_material.test(path)) {
         this.menu_type = 'material'
