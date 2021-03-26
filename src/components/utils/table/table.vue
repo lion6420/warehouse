@@ -14,7 +14,7 @@
             tableHeaderStyle(lv, header),
             {
               display: spanMethod_header?spanMethod_header(lv_index, h_index).rowspan === 0?'none':'default':'',
-            }]">
+            },if_sticky(header)]">
           <slot name="header" :header="header">{{header.label}}</slot>
         </th>
       </tr>
@@ -200,6 +200,9 @@ export default {
     backgroundColor: {
       type: String,
       require: false,
+      default() {
+        'inherit'
+      }
     },
     loading: {
       type:Boolean,
@@ -228,17 +231,15 @@ export default {
   methods: {
     //table style
     tableWrapperStyle() {
-      var style = {overflowX:'auto'}
+      var style = {}
       if (this.borderAround) {
         style['border'] = '1px  ' + this.borderColor + ' solid'
       }
       if (this.height !== '') {
         style['height'] = this.height
-        style['overflowY'] = 'scroll'
       }
       if (this.maxHeight !== '') {
         style['maxHeight'] = this.maxHeight
-        style['overflowY'] = 'scroll'
       }
       return style
     },
@@ -282,8 +283,8 @@ export default {
         return {
           position: 'sticky',
           left: '0px',
-          backgroundColor: this.backgroundColor ? this.backgroundColor : '#fff',
-          'box-shadow': '0 0 1px rgba(0,0,0,0.75)',
+          backgroundColor: this.backgroundColor ? this.backgroundColor : 'inherit',
+          'box-shadow': '0px 0px 10px 1px #454545',
           'clip-path': 'inset(0px -15px 0px 0px)'
         }
       }
@@ -291,9 +292,9 @@ export default {
         return {
           position: 'sticky',
           right: '0px',
-          backgroundColor: this.backgroundColor ? this.backgroundColor : '#fff',
-          'box-shadow': '0 0 1px rgba(0,0,0,0.75)',
-          'clip-path': 'inset(0px -15px 0px 0px)'
+          backgroundColor: this.backgroundColor ? this.backgroundColor : 'inherit',
+          'box-shadow': '0px 0px 10px 1px #454545',
+          'clip-path': 'inset(0px 0px 0px -15px)'
         }
       }
     },
@@ -456,6 +457,7 @@ export default {
 
 .tableContainer {
   @include block(100%);
+  overflow-x: hidden;
   table {
     font-family: arial, sans-serif;
     @include block(100%);
@@ -493,5 +495,9 @@ export default {
     margin:20px 0px;
     text-align: center;
   }
+}
+.tableContainer:hover {
+  overflow-x: auto;
+  overflow-y: auto;
 }
 </style>

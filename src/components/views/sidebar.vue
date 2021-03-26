@@ -82,6 +82,13 @@ export default {
       ],
       menu_human_resources: [
         {
+          label: '人力統計',
+          link: '/hr/statistics',
+          icon: {
+            class: 'fas fa-chart-bar'
+          }
+        },
+        {
           label: '人力維護',
           link: '/hr/maintenance',
           icon: {
