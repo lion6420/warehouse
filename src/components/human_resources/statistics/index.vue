@@ -8,7 +8,7 @@
         <statistics-card label="成品倉" :amount="93" :rate="32"></statistics-card>
       </div>
       <div :class="$style.statistics_col">
-        <statistics-card label="半成品倉" :amount="54" :rate="30"></statistics-card>
+        <statistics-card label="SI倉" :amount="54" :rate="30"></statistics-card>
       </div>
     </div>
 
@@ -20,7 +20,7 @@
         <statistics-card label="成品倉" :amount="93" :rate="32"></statistics-card>
       </div>
       <div :class="$style.statistics_col">
-        <statistics-card label="半成品倉" :amount="54" :rate="30"></statistics-card>
+        <statistics-card label="SI倉" :amount="54" :rate="30"></statistics-card>
       </div>
     </div>
   </div>

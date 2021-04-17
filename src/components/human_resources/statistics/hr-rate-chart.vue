@@ -76,6 +76,6 @@ export default {
 <style lang="scss" module>
 @import '@/styles/general.scss';
 .wrapper {
-  @include block(100%, 120px);
+  @include block(100%, 90px);
 }
 </style>

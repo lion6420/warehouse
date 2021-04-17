@@ -57,7 +57,7 @@ export default {
   @include block(100%, $radius:5px);
   background-color: var(--bg-color-snd);
   .card_top {
-    @include block(100%, 120px);
+    @include block(100%, 90px);
     display: flex;
     .title {
       @include block(50%, 120px);
@@ -66,7 +66,7 @@ export default {
         font-family: $zh;
         font-size:25px;
         text-align: center;
-        padding: 10px 0px;
+        padding: 5px 0px;
       }
       .amount {
         color: var(--text-color-hover);

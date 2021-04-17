@@ -17,12 +17,6 @@ export default {
         },
         tooltip: {
             trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                crossStyle: {
-                    color: '#999'
-                }
-            },
         },
         legend: {
           show:true,
@@ -72,11 +66,12 @@ export default {
               position: 'top',
             },
             lineStyle: {
-              color: '#4D94BB'
+              color: '#38B2E6'
             },
             itemStyle: {
-              color: '#4D94BB'
+              color: '#38B2E6'
             },
+            symbol: 'circle',
             symbolSize: 8,
           },
           {
@@ -88,11 +83,12 @@ export default {
               position: 'top',
             },
             lineStyle: {
-              color: '#C45857'
+              color: '#F3612B'
             },
             itemStyle: {
-              color: '#C45857'
+              color: '#F3612B'
             },
+            symbol: 'circle',
             symbolSize: 8,
           },
         ]
