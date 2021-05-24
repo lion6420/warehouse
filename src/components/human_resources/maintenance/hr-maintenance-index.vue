@@ -1,5 +1,6 @@
 <template>
   <div :class="$style.contentContainer">
+    <hr-maintenance></hr-maintenance>
     <!--新增人員-->
     <div :class="$style.newData">
       <div :class="$style.contentSubTitle" style="margin-top:20px;">
@@ -30,11 +31,13 @@
 </template>
 
 <script>
+import hrMaintenance from './hr-maintenance'
 import hrNewData from './hr-new-data'
 import hrUploadFile from './hr-upload-file'
 
 export default {
   components: {
+    hrMaintenance,
     hrNewData,
     hrUploadFile,
   },

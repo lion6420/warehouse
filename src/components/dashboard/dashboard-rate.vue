@@ -58,4 +58,28 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 992px) {
+  .wrapper {
+    flex-wrap: wrap;
+    .rate_block {
+      @include block(40%, 75px);
+      margin-top:25px;
+      .label {
+        font-family: $zh;
+        color: rgb(177, 177, 177);
+        text-align: center;
+      }
+      .data {
+        font-family: $aphabet;
+        color: #fff;
+        text-align: center;
+      }
+      .percentage {
+        margin: auto;
+        margin-top:10px;
+      }
+    }
+  }
+}
 </style>

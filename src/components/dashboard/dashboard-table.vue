@@ -20,7 +20,7 @@
       </template>
       <template slot="achievement" slot-scope="scope">
         <div style="display:flex;justify-content:space-between">
-          <div style="color: #AFAFAF;font-size: 15px">未達成件數: {{scope.data.unachieveAmount}}</div>
+          <div style="color: #AFAFAF;font-size: 15px"><span :class="$style.table_avhievement_num">未達成件數:</span> {{scope.data.unachieveAmount}}</div>
           <div>{{scope.data.achievement + '%'}}</div>
         </div>
         <div>
@@ -131,4 +131,11 @@ export default {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .wrapper {
+    .table_avhievement_num {
+      display: none;
+    }
+  }
+}
 </style>

@@ -4,14 +4,12 @@ import Login from '@/components/common/login'
 import Dashboard from '@/components/dashboard/dashboard-index'
 import Stock_Man_Efficiency from '@/components/stock/man_efficiency/index'
 
-import Human_Resources_Maintenance from '@/components/human_resources/maintenance/hr-maintenance'
-import Human_Resources_New_Data from '@/components/human_resources/new_data/hr-new-data-index'
+import Human_Resources_Maintenance from '@/components/human_resources/maintenance/hr-maintenance-index'
 import Human_Resources_Statistics from '@/components/human_resources/statistics/index'
 
 
 import Material_List from '@/components/material/material_list/material-list-index'
 import Material_History from '@/components/material/material_apply_history/material-history-index'
-import Stock_Efficiency from '@/components/stock_efficiency/stock-adjust-index'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -35,7 +33,7 @@ const routes = [
     }
   },
   {
-    path: '/achievement/stock/man_efficiency',
+    path: '/achievement/man_efficiency',
     name: 'stock_man_efficiency',
     component: Stock_Man_Efficiency,
     meta: {
@@ -60,14 +58,6 @@ const routes = [
       requireAuth: true,
     }
   },
-  {
-    path: '/hr/new_data',
-    name: 'hr_new_data',
-    component: Human_Resources_New_Data,
-    meta: {
-      requireAuth: true,
-    }
-  },
 
   // material list
   {
@@ -85,11 +75,6 @@ const routes = [
     meta: {
       requireAuth: true,
     } 
-  },
-  {
-    path: '/stock_efficiency',
-    name: 'stock_efficiency',
-    component: Stock_Efficiency,
   },
 ]
 

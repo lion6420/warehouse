@@ -24,61 +24,19 @@ export default {
       menu: [],
       menu_achievement: [
         {
-          type: 'dropdown',
-          label: '收貨',
+          label: '達成總覽',
           icon: {
             class: 'fas fa-warehouse'
           },
-          children: [
-            {
-              label: '實時查詢',
-              link: '/achievement/stock/realtime',
-            },
-            {
-              label: '歷史查詢'
-            },
-            {
-              label: '人員效率',
-              link: '/achievement/stock/man_efficiency',
-            }
-          ]
+          link: '/achievement/dashboard'
         },
         {
-          type: 'dropdown',
-          label: '備料',
+          label: '人員效率',
           icon: {
             class: 'fas fa-truck-moving'
           },
-          children: [
-            {
-              label: '實時查詢'
-            },
-            {
-              label: '歷史查詢'
-            },
-            {
-              label: '人員效率'
-            }
-          ]
+          link: '/achievement/man_efficiency'
         },
-        {
-          type: 'dropdown',
-          label: '盤點',
-          icon: {
-            class: 'fas fa-calculator'
-          },
-          children: [
-            {
-              label: '實時查詢'
-            },
-            {
-              label: '歷史查詢'
-            },
-            {
-              label: '人員效率'
-            }
-          ]
-        }
       ],
       menu_human_resources: [
         {
@@ -93,13 +51,6 @@ export default {
           link: '/hr/maintenance',
           icon: {
             class: 'fas fa-wrench'
-          }
-        },
-        {
-          label: '人力新增',
-          link: '/hr/new_data',
-          icon: {
-            class: 'fas fa-cloud-upload-alt'
           }
         },
       ],

@@ -94,7 +94,7 @@ export default {
         ]
       }
       option.series[0].data = [103, 102, 101, 105, 106, 108, 101, 102]
-      option.series[1].data = [73, 72, 71, 75, 76, 78, 71, 72, 78, 80]
+      option.series[1].data = [73, 72, 71, 75, 76, 78, 71, 72]
       option.xAxis.data = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月']
       return option
     },

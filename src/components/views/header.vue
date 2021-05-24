@@ -15,9 +15,6 @@
     <div :class="$style.header_left">
       <router-link :class="$style.router_link" to="/material/list" :style="active === 'material'?{color: '#fff', 'font-weight': 'bold'}:{}">物料訊息</router-link>
     </div>
-    <div :class="$style.header_left">
-      <router-link :class="$style.router_link" to="/stock_efficiency" :style="active === 'stock_efficiency'?{color: '#fff', 'font-weight': 'bold'}:{}">儲位效能</router-link>
-    </div>
 
     <div v-if="isLoggedIn" :class="$style.header_right">
       <div style="cursor:pointer" @click="logout">

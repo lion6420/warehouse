@@ -48,4 +48,20 @@ export default {
   }
 }
 
+@media screen and (max-width: 1140px) {
+  .material {
+    .row {
+      @include block(100%);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      .material_list {
+        @include block(98%, 500px);
+        margin: auto;
+        margin-top:20px;
+      }
+    }
+  }
+}
+
 </style>
