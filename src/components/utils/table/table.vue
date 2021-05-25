@@ -3,7 +3,7 @@
   <div class="tableContainer" :id="'tableContainer_' + _uid.toString()" :class="$style.tableContainer" 
     :style="tableWrapperStyle()"
   >
-  <table>
+  <table :id="'table_' + _uid">
     <thead :id="'tableHeadWrapper_' + _uid.toString()" v-if="header">
       <tr v-for="(lv,lv_index) in headerLevel" :key="lv_index">
         <th
@@ -19,33 +19,73 @@
         </th>
       </tr>
     </thead>
-    <tbody v-for="(group,g_index) in tbodyGroup?tbodyGroup.groupNumber:data.length" :key="g_index">
-      <tr v-for="(each_data,r_index) in makeTableDataGroup(g_index, tbodyGroup?tbodyGroup.groupSize:new Array(data.length).fill(1))" :key="r_index" 
-        :id="'tableRow_' + _uid.toString() + '_' + (tbodyGroup?groupIndexTranslation(g_index):g_index).toString()"
-        :class="$style.tableRow"
-        @click="toggleRow(g_index, tbodyGroup?groupIndexTranslation(g_index):g_index)">
-        <td v-for="(header,h_index) in propList" :key="h_index"
-          :rowspan="spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan"
-          :colspan="spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).colspan"
-          :style="[{
-            'border-left': showBorder(h_index),
-            'border-top': '1px ' + borderColor + ' solid',
-            'display': spanMethod(g_index, tbodyGroup?tbodyGroup.groupSize[groupIndexTranslation(g_index)]:1, tbodyGroup?r_index:g_index, h_index, header, each_data).rowspan === 0?'none':'default',
-            'background-color': backgroundColor?backgroundColor:bodyStriped(r_index)},
-            header.style,
-            if_sticky(header)]">
-          <slot :name="header.prop" :data="each_data">{{each_data[header.prop]}}</slot>
-        </td>
-      </tr>
-      <tr>
-        <td v-if="rowToggled" :colspan="columns.length" style="padding:0px;cursor: default;">
-          <div class="rowDetail" :class="$style.rowDetail">
-            <slot name="rowToggle" :index="g_index"></slot>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot :class="$style.footer">
+    <!--normal non-grouped table-->
+    <template v-if="!tbodyGroup">
+      <tbody>
+        <template v-for="(each_data,r_index) in data">
+          <tr :key="r_index"
+            :id="'tableRow_' + _uid.toString()"
+            :class="$style.tableRow"
+            :style="{cursor: clickEvent === null ? 'default':'pointer'}"
+            @click="toggleRow(null, r_index)">
+            <td v-for="(header,h_index) in propList" :key="h_index"
+              :rowspan="spanMethod(null, null, r_index, h_index, header, each_data).rowspan"
+              :colspan="spanMethod(null, null, r_index, h_index, header, each_data).colspan"
+              :style="[{
+                'border-left': showBorder(h_index),
+                'border-top': '1px ' + borderColor + ' solid',
+                'display': spanMethod(null, null, r_index, h_index, header, each_data).rowspan === 0?'none':'default',
+                'background-color': getBackgroundColor(r_index, header.prop, each_data)},
+                header.style,
+                tableCellStyle(),
+                if_sticky(header)]">
+              <slot :name="header.prop" :data="each_data">{{each_data[header.prop]}}</slot>
+            </td>
+          </tr>
+          <tr :key="'toggled_' + r_index" v-if="rowToggled">
+            <td :colspan="columns.length" style="padding:0px;cursor: default;">
+              <div class="rowDetail" :class="$style.rowDetail">
+                <slot name="rowToggle" :index="r_index"></slot>
+              </div>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </template>
+
+    <template v-else>
+      <tbody v-for="(group,g_index) in tbodyGroup.groupNumber" :key="g_index" :id="'tbody_' + _uid.toString()">
+        <tr
+          v-for="(each_data,r_index) in makeTableDataGroup(g_index, tbodyGroup.groupSize)"
+          :key="r_index"
+          :id="'tableRow_' + _uid.toString() + '_' + (groupIndexTranslation(g_index)).toString()"
+          :class="$style.tableRow"
+          @click="toggleRow(g_index, groupIndexTranslation(g_index))">
+          <td v-for="(header,h_index) in propList" :key="h_index"
+            :rowspan="spanMethod(g_index, tbodyGroup.groupSize[g_index], r_index, h_index, header, each_data).rowspan"
+            :colspan="spanMethod(g_index, tbodyGroup.groupSize[g_index], r_index, h_index, header, each_data).colspan"
+            :style="[{
+              'border-left': showBorder(h_index),
+              'border-top': '1px ' + borderColor + ' solid',
+              'display': spanMethod(g_index, tbodyGroup.groupSize[g_index], r_index, h_index, header, each_data).rowspan === 0?'none':'default',
+              'background-color': getBackgroundColor(r_index, header.prop, each_data)},
+              header.style,
+              tableCellStyle(),
+              if_sticky(header)]">
+            <slot :name="header.prop" :data="each_data">{{each_data[header.prop]}}</slot>
+          </td>
+        </tr>
+        <tr v-if="rowToggled">
+          <td :colspan="columns.length" style="padding:0px;cursor: default;">
+            <div class="rowDetail" :class="$style.rowDetail">
+              <slot name="rowToggle" :index="g_index"></slot>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </template>
+    
+    <tfoot :class="$style.table_footer">
       <slot name="footer"></slot>
     </tfoot>
   </table>
@@ -98,6 +138,10 @@ export default {
       default() {
         return true
       }
+    },
+    hoverStyle: {
+      type: String,
+      require: false,
     },
     borderAround: {
       type: Boolean,
@@ -166,13 +210,6 @@ export default {
         return 'default'
       }
     },
-    headerPadding: {
-      type: String,
-      require: false,
-      default() {
-        return '8px'
-      }
-    },
     spanMethod: {
       type: Function,
       require: false,
@@ -193,15 +230,17 @@ export default {
     clickEvent: {
       type: Function,
       require: false,
-      default() {
-        return null
-      }
+      default: null
     },
     backgroundColor: {
+      type: [Function, String],
+      require: false,
+    },
+    size: {
       type: String,
       require: false,
       default() {
-        'inherit'
+        return 'normal'
       }
     },
     loading: {
@@ -220,7 +259,9 @@ export default {
 
       headerLevel: 1,
       lastToggled: null,
-      headerHeight: 30,
+
+      headerHeight_normal: 40,
+      headerHeight_small: 20,
     }
   },
   created() {
@@ -228,10 +269,13 @@ export default {
     this.headerLevel = this.getHeaderlevel() //計算表頭有多少level
     this.getPropList() //處理多級表頭props問題
   },
+  mounted() {
+    this.checkHoverEffect() //是否載入hover效果
+  },
   methods: {
     //table style
     tableWrapperStyle() {
-      var style = {}
+      let style = {}
       if (this.borderAround) {
         style['border'] = '1px  ' + this.borderColor + ' solid'
       }
@@ -249,21 +293,20 @@ export default {
       else return '1px  ' + this.borderColor + ' solid'
     },
     tableHeaderStyle(header_level, header) {
-      var style = {
+      let style = {
         'background-color': this.headerBackgroundColor,
         'font-size': this.headerFontSize,
         color: this.headerColor,
-        height: this.headerHeight,
         'z-index': 1,
         'border-left': this.showBorder(),
-        'border-top': header_level!==1 ? this.showBorder(): '',
+        'border-top': header_level != 1 ? this.showBorder(): '',
         'text-align': this.headerTextAlign,
-        padding: this.headerPadding,
       }
-      if (this.height !== '' || this.maxHeight !== '') {
-        style['position'] = 'sticky'
-        style['top'] = ((header_level-1)*this.headerHeight).toString() + 'px'
-      }
+
+      //size diff
+      style = this.tableSizeEffect_header(style, header_level)
+
+      
       if (header.fixed === 'left') {
         style['z-index'] = 2
         style['left'] = '0px'
@@ -278,13 +321,80 @@ export default {
       }
       return style
     },
+    tableCellStyle() {
+      let style = {}
+      style = this.tableSizeEffect_cell(style)
+      return style
+    },
+    tableSizeEffect_header(style, header_level) {
+      switch (this.size) {
+        case 'normal':
+          style['height'] = this.headerHeight_normal + 'px'
+          if (this.height !== '' || this.maxHeight !== '') {
+            style['position'] = 'sticky'
+            style['top'] = ((header_level-1)*this.headerHeight_normal).toString() + 'px'
+          }
+          break
+        case 'small':
+          style['height'] = this.headerHeight_small + 'px'
+          if (this.height !== '' || this.maxHeight !== '') {
+            style['position'] = 'sticky'
+            style['top'] = ((header_level-1)*this.headerHeight_small).toString() + 'px'
+          }
+          break
+        default:
+          style['height'] = this.headerHeight_normal + 'px'
+          if (this.height !== '' || this.maxHeight !== '') {
+            style['position'] = 'sticky'
+            style['top'] = ((header_level-1)*this.headerHeight_normal).toString() + 'px'
+          }
+          break
+      }
+      return style
+    },
+    tableSizeEffect_cell(style) {
+      switch (this.size) {
+        case 'normal':
+          style['padding'] = '8px'
+          break
+        case 'small':
+          style['padding'] = '0px'
+          break
+        default:
+          style['padding'] = '8px'
+          break
+      }
+      return style
+    },
+    getBackgroundColor(r_index, prop, data) {
+      // custom background color was set
+      if (this.backgroundColor) {
+        if (typeof(this.backgroundColor) === 'string') return this.backgroundColor
+        else {
+          return this.backgroundColor(prop, data)
+        }
+      }
+      else return this.bodyStriped(r_index)
+    },
+    checkHoverEffect() {
+      let DOM = document.getElementById('tableContainer_' + this._uid.toString())
+      let DOM_table = document.getElementById('table_' + this._uid)
+      if (this.rowHover) {
+        DOM.setAttribute('hover-effect', 'on')
+        if (this.hoverStyle === 'dark') DOM_table.setAttribute('hover-style', 'dark')
+        else DOM_table.setAttribute('hover-style', 'light')
+      }
+      else {
+        DOM.setAttribute('hover-effect', 'off')
+      }
+    },
     if_sticky(header) {
       if (header.fixed === 'left') {
         return {
           position: 'sticky',
           left: '0px',
           backgroundColor: this.backgroundColor ? this.backgroundColor : 'inherit',
-          'box-shadow': '0px 0px 10px 1px #454545',
+          'box-shadow': '0px 0px 10px 1px #E7E7E7',
           'clip-path': 'inset(0px -15px 0px 0px)'
         }
       }
@@ -293,7 +403,7 @@ export default {
           position: 'sticky',
           right: '0px',
           backgroundColor: this.backgroundColor ? this.backgroundColor : 'inherit',
-          'box-shadow': '0px 0px 10px 1px #454545',
+          'box-shadow': '0px 0px 10px 1px #E7E7E7',
           'clip-path': 'inset(0px 0px 0px -15px)'
         }
       }
@@ -303,41 +413,45 @@ export default {
     toggleRow(group_index, row_index) {
       if (typeof(this.clickEvent) === 'function') this.clickEvent(row_index)
       if (this.rowToggled === false) return
-      if (document.getElementsByClassName('rowDetail')[group_index].style.display === 'block') {
-        document.getElementsByClassName('rowDetail')[group_index].style.display = 'none'
+
+      let toggle_index = group_index ? group_index:row_index
+
+      if (document.getElementsByClassName('rowDetail')[toggle_index].style.display === 'block') {
+        document.getElementsByClassName('rowDetail')[toggle_index].style.display = 'none'
       }
       else {
         if (this.lastToggled !== null) {
           document.getElementsByClassName('rowDetail')[this.lastToggled].style.display = 'none'
         }
-        document.getElementsByClassName('rowDetail')[group_index].style.display = 'block'
-        this.lastToggled = group_index
+        document.getElementsByClassName('rowDetail')[toggle_index].style.display = 'block'
+        this.lastToggled = toggle_index
       }
     },
 
     //多級表頭
     getHeaderlevel() {
-      var level = 1
+      let level = 1
       function dfs(header, currentLv) {
         if (!header.children) {
           level = currentLv>level ? currentLv:level
           return
         }
-        for (var i=0; i<header.children.length; i++) {
+        for (let i=0; i<header.children.length; i++) {
           dfs(header.children[i], ++currentLv)
+          currentLv--
         }
       }
-      for (var i=0; i<this.columns.length; i++) {
+      for (let i=0; i<this.columns.length; i++) {
         dfs(this.columns[i], 1)
       }
       return level
     },
     getHeaderRowSpan(header) {
-      var depth = 1
+      let depth = 1
       function dfs(header, currentDepth) {
         if (!header.children) depth = currentDepth>depth ? currentDepth:depth
         currentDepth
-        for (var i=0; i<header.children.length; i++) {
+        for (let i=0; i<header.children.length; i++) {
           dfs(header.children[i], currentDepth)
         }
       }
@@ -346,7 +460,7 @@ export default {
     },
     getHeaderColSpan(header) {
       if (!header.children) return 1
-      var colSpanList = new Array(header.children.length).fill(0)
+      let colSpanList = new Array(header.children.length).fill(0)
       function dfs(header, index) {
         if (!header.children) {
           colSpanList[index] = 1
@@ -356,22 +470,22 @@ export default {
           colSpanList[index] = header.children.length + colSpanList[index]
           return
         }
-        for (var i=0; i<header.children.length; i++) {
+        for (let i=0; i<header.children.length; i++) {
           dfs(header.children[i], index)
         }
       }
-      for (var i=0; i<header.children.length; i++) {
+      for (let i=0; i<header.children.length; i++) {
         dfs(header.children[i], i)
       }
-      var colSpan = 0
-      for (var j=0; j<colSpanList.length; j++) {
+      let colSpan = 0
+      for (let j=0; j<colSpanList.length; j++) {
         colSpan+=colSpanList[j]
       }
       return colSpan
     },
     columnsToRender(lv) {
       if (lv ===1) return this.columns
-      var headers = []
+      let headers = []
       function makeHeaders(header, currentLv) {
         currentLv+=1
         if (currentLv === lv) {
@@ -379,17 +493,17 @@ export default {
           return
         }
         if (!header.children) return
-        for (var i=0; i<header.children.length; i++) {
+        for (let i=0; i<header.children.length; i++) {
           makeHeaders(header.children[i], currentLv)
         }
       }
-      for (var i=0; i<this.columns.length; i++) {
+      for (let i=0; i<this.columns.length; i++) {
         makeHeaders(this.columns[i], 0)
       }
       return headers
     },
     getPropList() {
-      var self = this
+      let self = this
       this.propList = []
       function dfs(header) {
         if (header.prop) {
@@ -397,32 +511,34 @@ export default {
           return
         }
         if (!header.children) return
-        for (var i=0; i<header.children.length; i++) {
+        for (let i=0; i<header.children.length; i++) {
           dfs(header.children[i])
         }
       }
-      for (var i=0; i<this.columns.length; i++) dfs(this.columns[i])
+      for (let i=0; i<this.columns.length; i++) dfs(this.columns[i])
       return
     },
 
     //body group
     makeTableDataGroup(groupNumber, groupSize) {
-      let bypass_number = groupSize[0]
-      var start = 0
-      var end = bypass_number
-      for (var i=0; i<groupNumber; i++) {
-        bypass_number = groupSize[end]
+      if (!groupSize) return this.data
+
+      let bypass_number = 0
+      let start = 0
+      let end = 0
+      for (let i=0; i<=groupNumber; i++) {
+        bypass_number = groupSize[i]
         start = end
         end += bypass_number
       }
       return this.data.slice(start, end)
     },
     groupIndexTranslation(g_index) {
-      var real_index = 0
-      let bypass_number = this.tbodyGroup.groupSize[real_index]
-      for (var i=0; i<g_index; i++) {
+      let real_index = 0
+      let bypass_number = this.tbodyGroup.groupSize[0]
+      for (let i=0; i<g_index; i++) {
         real_index += bypass_number
-        bypass_number = this.tbodyGroup.groupSize[real_index]
+        bypass_number = this.tbodyGroup.groupSize[i+1]
       }
       return real_index
     },
@@ -434,13 +550,22 @@ export default {
         else return '#fff'
       }
       else return ''
+    },
+
+    // other utils
+    isNumber(value) {
+      let figure = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+      if (value in figure) return true
+      else return false
     }
   },
   watch: {
     //when table rerender, untoggle the detail row.
     data() {
       if (this.lastToggled !== null) {
-        document.getElementsByClassName('rowDetail')[this.lastToggled].style.display = 'none'
+        if (document.getElementsByClassName('rowDetail')[this.lastToggled]) {
+          document.getElementsByClassName('rowDetail')[this.lastToggled].style.display = 'none'
+        }
         this.lastToggled = null
       }
     },
@@ -464,12 +589,14 @@ export default {
     border-collapse: separate; /* Don't collapse */
     border-spacing: 0;
     tr {
+      padding: 0px;
       td {
-        padding: 8px;
+        padding: 0px;
       }
       th {
         font-weight: bold;
         text-align: left;
+        padding: 0px;
       }
     }
     .tableRow:hover {
@@ -480,8 +607,8 @@ export default {
       transition: max-height 0.25s;
       background-color: #f5f5f5;
     }
-    .footer {
-      background-color: #e4e4e4;
+    .table_footer {
+      @include block(100%);
     }
   }
   .emptyText {
@@ -496,6 +623,7 @@ export default {
     text-align: center;
   }
 }
+
 .tableContainer:hover {
   overflow-x: auto;
   overflow-y: auto;

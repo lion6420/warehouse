@@ -7,19 +7,19 @@
       <div :class="$style.username_label">
         <span>Username:</span>
       </div>
-      <t-input :class="$style.username_input" width="300px"></t-input>
+      <t-input :class="$style.username_input" width="300px" v-model="username"></t-input>
     </div>
     <div :class="$style.password">
       <div :class="$style.password_label">
         <span>Password:</span>
       </div>
-      <t-input :class="$style.password_input" width="300px"></t-input>
+      <t-input :class="$style.password_input" width="300px" v-model="password" type="password"></t-input>
     </div>
     <div :class="$style.msgArea">
       <span v-if="errorMsg" class="fas fa-exclamation-triangle" style="position:relative; right:5px"></span>
       <span>{{errorMsg}}</span>
     </div>
-    <div :class="$style.login_btn" @click="login">
+    <div :class="$style.login_btn" @click="login" id="login_btn">
       <div style="padding: 8px 10px;">LOGIN</div>
     </div>
   </div>
@@ -35,15 +35,38 @@ export default {
     return {
       show_warning: false,
       errorMsg: '',
-      username: '',
-      password: '',
+      username: 'admin',
+      password: 'admin',
     }
+  },
+  mounted() {
+    document.addEventListener('keypress', this.enterEvent)
   },
   methods: {
     login() {
-      this.$store.dispatch('login', this.username)
-      this.$router.push('/')
+      let user_info = {
+        username: this.username,
+        password: this.password
+      }
+      this.$store.dispatch('login', user_info)
+      if (this.isLoggedIn) this.$router.push('/')
+      else {
+        alert(this.$store.getters.login_error)
+      }
     },
+    enterEvent(evt) {
+      if (evt.key === 'Enter') {
+        this.login()
+      }
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn
+    }
+  },
+  destroyed() {
+    document.removeEventListener('keypress', this.enterEvent)
   }
 }
 </script>
@@ -52,9 +75,9 @@ export default {
 @import '@/styles/general.scss';
 .login {
   @include block(500px, 300px);
-  box-shadow: 0px 0px 20px 1px rgb(15, 15, 15);
+  box-shadow: 0px 0px 20px 1px rgb(24, 24, 24);
   border-radius: 10px;
-  color: #fff;
+  color: var(--text-color);
   background-color: var(--bg-color-snd);
   margin: auto;
   margin-top:120px;
@@ -103,6 +126,7 @@ export default {
     text-align: center;
     margin: 10px auto;
     background-color: $color-azure;
+    color: var(--text-color-hover);
     font-family:var(--font-family);
     cursor: pointer;
   }

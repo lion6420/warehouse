@@ -26,8 +26,6 @@
 </template>
 
 <script>
-import XLSX from 'xlsx'
-
 export default {
   data() {
     return {
@@ -42,20 +40,13 @@ export default {
       document.getElementById('inputFile').click()
     },
     //upload area changed
-    dragoverHandler(e) {
-      e.preventDefault()
+    dragoverHandler(evt) {
+      evt.preventDefault()
     },
-    onChange(e) {
-      e.preventDefault()
-      var self = this
-      var reader = new FileReader()
-      var file = e.target.files || e.dataTransfer.files
+    onChange(evt) {
+      evt.preventDefault()
+      var file = evt.target.files || evt.dataTransfer.files
       this.fileUploaded = file[0]
-      reader.onload = function(event) {
-        var wb = XLSX.read(event.target.result, {type: 'binary'})
-        self.tableData_upload = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]])
-      }
-      reader.readAsBinaryString(this.fileUploaded)
       this.dragging = false
     },
 
@@ -64,7 +55,18 @@ export default {
       this.fileUploaded = null
     },
     fileUpload() {
-      console.log('test')
+      // Confirm message
+      var self = this
+      this.$confirm({
+        title: '上傳確認',
+        content: '確認後檔案將上傳到伺服器',
+        onOk() {
+          self.$message.success('上傳成功')
+          self.removeFileUploaded()
+        },
+        onCancel() {
+        },
+      })
     },
   }
 }

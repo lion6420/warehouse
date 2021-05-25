@@ -20,11 +20,12 @@ export default {
 <style lang="scss" module>
 @import './common/general.scss';
 .footer {
-  @include block(100%, $height:45px, $background-color: #000);
+  @include block(100%, $height:35px);
+  background-color: #000;
   text-align: center;
   color:#fff;
   font-size: 16px;
   position: relative;
-  z-index: -1;
+  z-index: 2;
 }
 </style>

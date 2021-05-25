@@ -8,10 +8,10 @@
           <div class="fas fa-square" style="color:red;font-size:16px;margin:15px 10px;"></div>
           <div>人員新增</div>
         </div>
-        <div :class="$style.submitBtn" @click="submit">送出</div>
+        <div :class="$style.submitBtn" @click="submit_check">送出</div>
       </div>
       <div :class="$style.newDataArea">
-        <hr-new-data v-for="(row,r_index) in new_data.length" :key="r_index" @removeRow="removeRow" :index="r_index" :data="new_data[r_index]"></hr-new-data>
+        <hr-new-data v-for="(row,r_index) in new_data.length" :key="r_index" @removeRow="removeRow" :index="r_index" :new_data="new_data[r_index]"></hr-new-data>
         <div class="col align-self-end">
           <div :class="$style.addRow" @click="addRow()"><span style="position:relative;top:5px" class="fas fa-plus"></span></div>
         </div>
@@ -53,18 +53,12 @@ export default {
       new_data: [{
         EMP_NO: '',
         EMP_NAME: '',
-        POST_TYPE: '',
         SOURCE: '',
         DEPARTMENT: '',
-        SITE: 'FOL',
-        BU: '',
         WHS_TYPE: '',
         AREA: '',
-        JOB_TYPE: '',
         CLASS: '',
-        JOB_RANK: '',
         JOB_NAME: '',
-        TIME: '',
       }],
     }
   },
@@ -80,40 +74,58 @@ export default {
       this.new_data.push({
         EMP_NO: '',
         EMP_NAME: '',
-        POST_TYPE: '',
         SOURCE: '',
         DEPARTMENT: '',
-        SITE: 'FOL',
-        BU: '',
         WHS_TYPE: '',
         AREA: '',
-        JOB_TYPE: '',
         CLASS: '',
-        JOB_RANK: '',
         JOB_NAME: '',
-        TIME: '',
       })
     },
     reset() {
       this.new_data = [{
         EMP_NO: '',
         EMP_NAME: '',
-        POST_TYPE: '',
         SOURCE: '',
         DEPARTMENT: '',
-        SITE: 'FOL',
-        BU: '',
         WHS_TYPE: '',
         AREA: '',
-        JOB_TYPE: '',
         CLASS: '',
-        JOB_RANK: '',
         JOB_NAME: '',
-        TIME: '',
       }]
     },
-    submit() {
-      return
+    submit_check() {
+      // 檢查所有input框都填寫
+      for (let i=0; i<this.new_data.length; i++) {
+        if (
+          this.new_data[i]['EMP_NO'] === '' ||
+          this.new_data[i]['EMP_NAME'] === '' ||
+          this.new_data[i]['SOURCE'] === '' ||
+          this.new_data[i]['DEPARTMENT'] === '' ||
+          this.new_data[i]['WHS_TYPE'] === '' ||
+          this.new_data[i]['AREA'] === '' ||
+          this.new_data[i]['CLASS'] === '' ||
+          this.new_data[i]['JOB_NAME'] === ''
+        ) {
+          alert('請將新增資料填寫完整')
+          return
+        }
+      }
+      // Confirm message
+      var self = this
+      this.$confirm({
+        title: '新增確認',
+        content: '確認後新增結果將會寫入資料庫',
+        onOk() {
+          self.submit_new_data()
+          self.reset()
+        },
+        onCancel() {
+        },
+      })
+    },
+    submit_new_data() {
+      this.$message.success('新增成功')
     },
   }
 }

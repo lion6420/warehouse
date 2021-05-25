@@ -13,7 +13,8 @@
       :placeholder="placeholder"
       :value="value"
       @input="$emit('input', $event.target.value)"
-      :style="{height: height ? height:'30px', 'text-align':textAlign?textAlign:'default'}" />
+      :style="{height: height ? height:'30px', 'text-align':textAlign?textAlign:'default'}"
+      :type="type" />
       <div :class="$style.addonAfter">
         <slot name="addonAfter"></slot>
       </div>
@@ -26,6 +27,13 @@ export default {
     value: {
       type: String,
       require: true,
+    },
+    type: {
+      type: String,
+      require: false,
+      default() {
+        return 'text'
+      }
     },
     width: {
       type: String,
@@ -74,12 +82,12 @@ export default {
 <style lang="scss" module>
 @import './common/general.scss';
 .inputWrapper {
-  @include block(100%, $radius: 3px);
+  @include block(100%, 32px, $radius: 3px);
   display: flex;
   font-size: 15px;
   border: 1px solid #c2c2c2;
-  background-color: $background-color;
   color: #000;
+  background-color: #fff;
   .addonBefore {
     padding:4px;
   }
@@ -88,7 +96,6 @@ export default {
     outline: none;
     border:none;
     font-size: 15px;
-    background-color: $background-color;
   }
   .addonAfter {
     padding:4px;

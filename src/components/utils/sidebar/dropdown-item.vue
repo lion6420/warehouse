@@ -118,6 +118,9 @@ export default {
   watch: {
     '$route'() {
       this.activeCheck()
+    },
+    expandList() {
+      this.num_of_items = this.expandList.length
     }
   }
 }

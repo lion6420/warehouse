@@ -57,14 +57,14 @@ export default {
       type: Number,
       require: false,
       default() {
-        return 200
+        return 180
       }
     },
     width: {
       type: Number,
       require: false,
       default() {
-        return 200
+        return 180
       }
     }
   },
@@ -111,7 +111,7 @@ export default {
 @import './sidebar-style.scss';
 .wrapper {
   overflow: hidden;
-  @include block(200px);
+  @include block(180px);
   display: flex;
   color: var(--sidebar-text-color);
   .activebar {
@@ -119,7 +119,7 @@ export default {
     background-color: var(--sidebar-active-bar);
   }
   .baseBtn {
-    @include block(200px, 50px);
+    @include block(180px, 50px);
     background-color: transparent;
     text-align: center;
     font-size: 16px;
@@ -156,7 +156,6 @@ export default {
     max-width: 0px;
     transition: max-height 0.2s linear, max-width 0.1s linear;
     background-color: var(--sidebar-bg-color);
-    box-shadow: 0px 0px 1px 1px rgb(56, 56, 56);
   }
 }
 

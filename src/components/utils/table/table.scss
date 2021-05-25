@@ -1,7 +1,12 @@
 // hover color
-[hoverEffect="on"] {
-  --table-hover-color: #eaf4ff;
+[hover-effect="on"] {
+  [hover-style="light"] {
+    --table-hover-color: #eaf4ff;
+  }
+  [hover-style="dark"] {
+    --table-hover-color: rgb(53, 56, 65);
+  }
 }
-[hoverEffect="off"] {
+[hover-effect="off"] {
   --table-hover-color: '';
 }

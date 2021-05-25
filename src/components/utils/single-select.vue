@@ -1,11 +1,10 @@
 <template>
-  <div :class="$style.singleSelect" :style="{width:width}">
-    <div :class="$style.inputArea" @mouseleave="hideRemoveIcon">
+  <div :class="$style.singleSelect" :style="{width:width}" :id="'single-select_' + _uid.toString()">
+    <div :class="$style.inputArea" @mouseleave="hideRemoveIcon" :id="'input_container_' + _uid.toString()">
       <div :class="$style.addonBefore">
         <slot name="addonBefore"></slot>
       </div>
       <input
-        readonly
         :class="$style.inputText"
         :placeholder="placeholder"
         :value="value"
@@ -19,8 +18,8 @@
         <span class="fas fa-times-circle" @mouseover="showRemoveIcon('removeIcon')" @click="removeFunction"></span>
       </div>
     </div>
-    <div :class="$style.optionsArea" :id="'optionsArea_' + _uid.toString()" :style="{width:width}">
-      <div :class="$style.option" v-for="(option,o_index) in options" :key="o_index" @click="selectFunction(option)"
+    <div :class="$style.optionsArea" v-if="expand_options" :id="'optionsArea_' + _uid.toString()" :style="{width:width}">
+      <div :class="$style.option" v-for="(option,o_index) in options_show" :key="o_index" @click="selectFunction(option)"
         :style="option && option.disabled ? {color: '#828282', cursor: 'not-allowed'}:{}">
         <span :class="$style.optionText">{{option.label ? option.label:option}}</span>
       </div>
@@ -66,7 +65,23 @@ export default {
       default() {
         return ''
       }
+    },
+    filter_disabled: {
+      type: Boolean,
+      require: false,
+      default() {
+        return false
+      }
     }
+  },
+  data() {
+    return {
+      options_show: [],
+      expand_options: false,
+    }
+  },
+  created() {
+    this.filterOptions()
   },
   mounted() {
     var self = this
@@ -77,18 +92,43 @@ export default {
       }
       else self.closeOptionsArea()
     }
+    this.scrollEvent = function(evt) {
+      if (evt.target.id === ('optionsArea_' + self._uid.toString())) return
+      self.closeOptionsArea()
+    }
     document.addEventListener('click', this.clickEvent)
+    document.addEventListener('scroll', this.scrollEvent, true)
   },
   methods: {
     openOptionsArea() {
-      var DOM = document.getElementById('optionsArea_' + this._uid.toString())
-      DOM.style.display = 'block'
-      DOM.style.maxHeight = '200px'
+      this.expand_options = true
+      var self = this
+      // after DOM rendered
+      this.$nextTick(function() {
+        let DOM = document.getElementById('optionsArea_' + self._uid.toString())
+        DOM.style.display = 'block'
+        DOM.style.maxHeight = '200px'
+        
+        let position = self.getPosition()
+        DOM.style.left = position.x + 'px'
+        DOM.style.top = position.y + 'px'
+      })
     },
     closeOptionsArea() {
+      if (!this.expand_options) return
       var DOM = document.getElementById('optionsArea_' + this._uid.toString())
       DOM.style.display = 'none'
       DOM.style.maxHeight = '0px'
+      this.expand_options = false
+    },
+    getPosition() {
+      let x, y
+      const DOM = document.getElementById('input_container_' + this._uid.toString())
+
+      x = DOM.getBoundingClientRect().left + window.scrollX
+      y = DOM.getBoundingClientRect().top + window.scrollY + DOM.offsetHeight + 1
+
+      return {x:x, y:y}
     },
     showRemoveIcon(id) {
       const DOM = document.getElementById('removeIcon_' + this._uid.toString())
@@ -106,10 +146,30 @@ export default {
     },
     removeFunction() {
       this.$emit('input', '')
+    },
+    filterOptions() {
+      if (this.value === '' || this.filter_disabled) this.options_show = this.options
+      else {
+        const optionRegExp = new RegExp(`${this.value}`)
+        var filteredArray = []
+        for (let i=0; i<this.options.length; i++) {
+          if (optionRegExp.test(this.options[i])) filteredArray.push(this.options[i])
+        }
+        this.options_show = filteredArray
+      }
+    }
+  },
+  watch: {
+    value() {
+      this.filterOptions()
+    },
+    options() {
+      this.filterOptions()
     }
   },
   destroyed() {
     document.removeEventListener('click', this.clickEvent)
+    document.removeEventListener('scroll', this.scrollEvent, true)
   }
 }
 </script>
@@ -117,26 +177,22 @@ export default {
 <style lang="scss" module>
 @import './common/general.scss';
 .singleSelect {
-  position:relative;
+  background-color: #fff;
   .inputArea {
     @include block(100%, $radius: 3px);
     display: flex;
     border: 1px solid #a7a7a7;
     cursor: pointer;
-    color:#000;
-    background-color: $background-color;
     .addonBefore {
       padding: 4px;
     }
     .inputText {
-      @include block(100%, 30px);
+      @include block(100%, 30px, $radius: 3px);
       outline: none;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
       border: none;
       font-size: 15px;
       cursor: pointer;
-      background-color: $background-color;
+      color: rgb(73, 73, 73);
     }
     .removeIcon {
       display: none;
@@ -150,12 +206,11 @@ export default {
   }
   
   .optionsArea {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     transition: max-height 0.2s linear;
     box-shadow: 0px 0px 5px rgb(194, 194, 194);
     overflow-y: auto;
-    display: none;
     font-family: Microsoft JhengHei;
     position: absolute;
     background-color: #fff;
@@ -164,12 +219,12 @@ export default {
       @include block(100%);
       display: flex;
       cursor: pointer;
-      color:#000;
       .optionText {
         @include block(90%);
         margin-left:10px;
         padding: 5px;
         font-size:16px;
+        color: rgb(73, 73, 73);
       }
     }
     .option:hover {
@@ -180,7 +235,6 @@ export default {
       overflow: hidden;
       padding: 5px 0px;
       text-align: center;
-      color:#000;
       .noDataIcon {
         font-size:30px;
         color: rgb(148, 148, 148);

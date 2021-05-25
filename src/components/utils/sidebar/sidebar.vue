@@ -19,7 +19,7 @@ export default {
       type: String,
       require: false,
       default() {
-        return '200px'
+        return '180px'
       }
     },
     menu: {
@@ -75,6 +75,9 @@ export default {
       else {
         DOM.style.maxWidth = '0px'
       }
+    },
+    theme() {
+      this.initTheme()
     }
   }
 }

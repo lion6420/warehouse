@@ -88,7 +88,7 @@ export default {
 @import '../common/general.scss';
 @import './sidebar-style.scss';
 .wrapper {
-  @include block(200px, $sidebar-item-height);
+  @include block(180px, $sidebar-item-height);
   display: flex;
   background-color: transparent;
   cursor: pointer;
