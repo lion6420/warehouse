@@ -42,7 +42,7 @@
               <slot :name="header.prop" :data="each_data">{{each_data[header.prop]}}</slot>
             </td>
           </tr>
-          <tr :key="'toggled_' + r_index" v-if="rowToggled">
+          <tr :key="'rowToggled_' + r_index.toString()" v-if="rowToggled">
             <td :colspan="columns.length" style="padding:0px;cursor: default;">
               <div class="rowDetail" :class="$style.rowDetail">
                 <slot name="rowToggle" :index="r_index"></slot>
@@ -392,18 +392,20 @@ export default {
       if (header.fixed === 'left') {
         return {
           position: 'sticky',
+          'z-index': 2,
           left: '0px',
           backgroundColor: this.backgroundColor ? this.backgroundColor : 'inherit',
-          'box-shadow': '0px 0px 10px 1px #E7E7E7',
+          'box-shadow': '0px 0px 10px 1px #454545',
           'clip-path': 'inset(0px -15px 0px 0px)'
         }
       }
       else if (header.fixed === 'right') {
         return {
           position: 'sticky',
+          'z-index': 2,
           right: '0px',
           backgroundColor: this.backgroundColor ? this.backgroundColor : 'inherit',
-          'box-shadow': '0px 0px 10px 1px #E7E7E7',
+          'box-shadow': '0px 0px 10px 1px #454545',
           'clip-path': 'inset(0px 0px 0px -15px)'
         }
       }
@@ -563,9 +565,7 @@ export default {
     //when table rerender, untoggle the detail row.
     data() {
       if (this.lastToggled !== null) {
-        if (document.getElementsByClassName('rowDetail')[this.lastToggled]) {
-          document.getElementsByClassName('rowDetail')[this.lastToggled].style.display = 'none'
-        }
+        document.getElementsByClassName('rowDetail')[this.lastToggled].style.display = 'none'
         this.lastToggled = null
       }
     },
