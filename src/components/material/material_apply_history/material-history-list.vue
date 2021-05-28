@@ -2,7 +2,8 @@
   <div :class="$style.wrapper">
     <t-table
       :columns="headers"
-      :data="tableData"
+      :data="tableData_show"
+      :loading="loading"
       headerBackgroundColor=""
       :bordered="false"
       :rowHover="false"
@@ -16,14 +17,40 @@
         <span v-else style="color:#2CBAF5">{{scope.data['status']}}</span>
       </template>
     </t-table>
+    <a-pagination
+      v-model="currentPage"
+      :total="tableData.length"
+      :page-size="pageSize"
+      @change="changePage"
+      style="margin-top:20px;margin-bottom:10px;text-align: center;"
+    />
+    <div style="height:10px"></div>
   </div>
 </template>
 
 <script>
 import tTable from '@/components/utils/table/table'
+import api from '@/api/material/index'
 export default {
   components: {
     tTable,
+  },
+  props: {
+    PN: {
+      type: String,
+      require: true,
+    },
+    applicant: {
+      type: String,
+      require: true
+    },
+    search_signal: {
+      type: Boolean,
+      require: true
+    }
+  },
+  created() {
+    this.getData()
   },
   data() {
     return {
@@ -36,98 +63,47 @@ export default {
         {label: '申請時間', prop: 'applied_time', style: {'text-align': 'center'}},
         {label: '簽核狀態', prop: 'status', style: {'text-align': 'center'}},
       ],
-      tableData: [
-        {
-          SN: 'S20210109003',
-          PN: '800-100-230',
-          amount: 1050,
-          applicant: '員工A',
-          position: '倉庫A',
-          applied_time: '2021-01-09',
-          status: '駁回',
-        },
-        {
-          SN: 'S20210119001',
-          PN: '800-100-230',
-          amount: 105,
-          applicant: '員工B',
-          position: '倉庫B',
-          applied_time: '2021-01-19',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120003',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120004',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120005',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120006',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120007',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120008',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210120009',
-          PN: '800-100-230',
-          amount: 50,
-          applicant: '員工C',
-          position: '倉庫A',
-          applied_time: '2021-01-20',
-          status: '完成',
-        },
-        {
-          SN: 'S20210109005',
-          PN: '800-100-230',
-          amount: 100,
-          applicant: '員工D',
-          position: '倉庫C',
-          applied_time: '2021-02-09',
-          status: '進行中',
-        },
-      ]
+      loading: false,
+      tableData: [],
+      tableData_show: [],
+
+      currentPage: 1,
+      pageSize: 10,
+    }
+  },
+  methods: {
+    async getData() {
+      var self = this
+      this.loading = true
+      this.tableData = []
+      this.tableData_show = []
+      await api.get_material_applied_history(this.PN, this.applicant)
+      .then(
+        function resolved(value) {
+          self.tableData = value
+          self.changePage(1)
+        }
+      )
+      .catch(function error(error) {
+        console.log(error)
+        self.tableData = []
+        self.changePage(1)
+      })
+      this.loading = false
+    },
+    changePage(page) {
+      let start, end
+      start = (page-1)*this.pageSize
+      end = start + this.pageSize
+      this.tableData_show = this.tableData.slice(start, end)
+    }
+  },
+  watch: {
+    search_signal() {
+      if (this.search_signal) {
+        this.getData()
+        this.$emit('handle_search_signal')
+      }
     }
   }
 }
@@ -136,11 +112,12 @@ export default {
 <style lang="scss" module>
 @import '@/styles/general.scss';
 .wrapper {
-  @include block(100%, 500px);
+  @include block(100%);
   box-shadow: 0px 0px 10px 1px rgb(26, 24, 24);
   background-color: var(--bg-color-snd);
   font-family: var(--font-family);
   color: #fff;
+  max-height: 500px;
 }
 
 </style>

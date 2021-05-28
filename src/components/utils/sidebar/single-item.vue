@@ -1,11 +1,11 @@
 <template>
-  <div :class="$style.wrapper" :id="'single-item_' + _uid.toString()">
+  <div :class="$style.wrapper" :id="'single-item_' + _uid.toString()" :style="{width: width.toString() + 'px'}">
     <div :class="$style.activebar"></div>
     <router-link :to="link" :class="$style.btn" :id="'item-btn_' + _uid.toString()"
       :style="[itemStyle]">
-      <div :class="[$style.baseBtn_icon, icon.class]">{{icon.label}}</div>
-      <div :class="$style.btn_label"><span style="position:relative; top:12px">{{label}}</span></div>
-      <div style="width:20%"></div>
+      <div :class="[$style.baseBtn_icon, icon.class]" v-if="Object.keys(icon).length">{{icon.label}}</div>
+      <div :class="$style.btn_label" :style="{'padding-left': Object.keys(icon).length > 0 ? '5px':'20px'}"><span style="position:relative; top:12px">{{label}}</span></div>
+      <div style="width: 10%"></div>
     </router-link>
   </div>
 </template>
@@ -14,6 +14,13 @@
 export default {
   name: 'single-item',
   props: {
+    width: {
+      type: Number,
+      require: false,
+      default() {
+        return 220
+      }
+    },
     label: {
       type: String,
       require: true,
@@ -88,7 +95,7 @@ export default {
 @import '../common/general.scss';
 @import './sidebar-style.scss';
 .wrapper {
-  @include block(180px, $sidebar-item-height);
+  @include block(220px, $sidebar-item-height);
   display: flex;
   background-color: transparent;
   cursor: pointer;
@@ -99,19 +106,19 @@ export default {
   .btn {
     @include block(100%);
     display: flex;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: none;
     color: var(--sidebar-text-color);
     font-weight: var(--sidebar-text-weight);
-    text-align: center;
     .baseBtn_icon {
       @include block(20%);
       position:relative;
-      top: 15px;
-      padding:0px 8px;
+      text-align: center;
+      padding-top:15px;
     }
     .btn_label {
-      @include block(60%);
+      @include block(70%);
+      padding-left:5px;
     }
   }
 }

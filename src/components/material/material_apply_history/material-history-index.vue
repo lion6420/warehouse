@@ -19,9 +19,16 @@
       <!--Applicant-->
       <span style="margin: 5px 20px 0px 30px">搜尋申請人: </span>
       <t-input v-model="applicant"></t-input>
+
+      <a-button style="margin-left:20px" @click="search_signal = true">搜尋</a-button>
     </div>
     <div :class="$style.listArea">
-      <material-history-list></material-history-list>
+      <material-history-list
+        :PN="PN"
+        :applicant="applicant"
+        :search_signal="search_signal"
+        @handle_search_signal="handle_search_signal">
+      </material-history-list>
     </div>
   </div>
 </template>
@@ -43,6 +50,13 @@ export default {
       time_range: [],
       PN: '',
       applicant: '',
+
+      search_signal: false
+    }
+  },
+  methods: {
+    handle_search_signal() {
+      this.search_signal = false
     }
   }
 }

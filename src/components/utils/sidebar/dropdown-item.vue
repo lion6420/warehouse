@@ -1,10 +1,10 @@
 <template>
-  <div :class="$style.wrapper" :id="'dropdown-item_' + _uid.toString()">
+  <div :class="$style.wrapper" :id="'dropdown-item_' + _uid.toString()" :style="{width: width.toString() + 'px'}">
     <div
       :class="$style.baseBtn"
       @click="operateItem"
       :style="[itemStyle, {height: height.toString() + 'px', color: active?'#fff':'', 'font-weight':active?'bold':''}]">
-      <span :class="[$style.baseBtn_icon, icon.class]">{{icon.label}}</span>
+      <span :class="[$style.baseBtn_icon, icon.class]" v-if="Object.keys(icon).length">{{icon.label}}</span>
       <div :class="$style.baseBtn_label"><span style="position:relative;top:12px">{{label}}</span></div>
       <!--expand icon-->
       <div v-if="if_expand" :class="$style.baseBtn_dropicon"><span class="fas fa-caret-down" style="position:relative; top:10px"></span></div>
@@ -70,10 +70,10 @@ export default {
       }
     },
     width: {
-      type: String,
+      type: Number,
       require: false,
       default() {
-        return '100%'
+        return 220
       }
     },
   },
@@ -140,22 +140,19 @@ export default {
     color: var(--sidebar-text-color);
     font-weight: var(--sidebar-text-weight);
     background-color: var(--sidebar-bg-color);
-    text-align: center;
     .baseBtn_icon {
       @include block(20%);
-      position:relative;
       text-align: center;
-      top:15px;
-      padding:0px 10px 0px 12px;
-    }
-    .baseBtn_label {
-      @include block(60%);
+      padding-top:15px;
       margin-left:4px;
     }
+    .baseBtn_label {
+      @include block(70%);
+      padding-left:5px;
+    }
     .baseBtn_dropicon {
-      @include block(20%);
+      @include block(10%);
       text-align: center;
-      position:relative;
       font-size:18px;
     }
   }
