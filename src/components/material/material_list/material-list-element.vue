@@ -2,13 +2,14 @@
   <div :class="$style.wrapper">
     <div :class="$style.title">
       <span style="position:relative;top:5px;left:10px">Material </span>
-      <span style="position:relative;top:5px;left:10px;color:#fff">{{catagory}}</span>
+      <span style="position:relative;top:5px;left:10px;color:#fff">Catagory {{catagory}}</span>
     </div>
     <div :class="$style.list">
       <t-table
       :class="$style.table"
       :columns="headers"
-      :data="tableData"
+      :data="tableData_show"
+      :loading="loading"
       headerBackgroundColor=""
       :bordered="false"
       :rowHover="false"
@@ -19,10 +20,14 @@
         <template slot="operation" slot-scope="scope">
           <div :class="$style.list_operation">
             <!--add order-->
-            <div v-if="!scope.data['ordered']" :class="$style.operation_plus" @click="add_order(scope.data)"><span class="fas fa-plus"></span></div>
+            <div v-if="!scope.data['ordered']" :class="$style.operation_plus" @click="add_order(scope.data)">
+              <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px; position:relative; right:-10px"></t-spin>
+              <span class="fas fa-plus" v-if="!scope.data['loading']"></span>
+            </div>
             <!--remove order-->
-            <div v-if="scope.data['ordered']" :class="$style.operation_minus" @click="remove_order(scope.data['PN'])">
-              <span class="fas fa-times-circle"></span>
+            <div v-else :class="$style.operation_minus" @click="remove_order(scope.data['PN'])">
+              <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px; position:relative; right:-10px"></t-spin>
+              <span class="fas fa-times-circle" v-if="!scope.data['loading']"></span>
             </div>
             <!--information-->
             <div :class="$style.operation_detail"><span class="fas fa-info-circle"></span></div>
@@ -32,15 +37,26 @@
           <span :style="{color:scope.data['stock']>scope.data['demand'] ? '#fff':'red'}">{{scope.data['stock']}}</span>
         </template>
       </t-table>
+      <a-pagination
+        v-model="currentPage"
+        :total="tableData.length"
+        :page-size="pageSize"
+        size="small"
+        @change="changePage"
+        style="margin-top:20px;margin-bottom:10px;text-align: center;"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import tTable from '@/components/utils/table/table'
+import tSpin from '@/components/utils/spin'
+import api from '@/api/material/index'
 export default {
   components: {
     tTable,
+    tSpin
   },
   props: {
     catagory: {
@@ -53,6 +69,8 @@ export default {
   },
   data() {
     return {
+      click_loading: false,
+      loading: false,
       headers: [
         {prop: 'PN', label: '料號', style: {'text-align': 'center'}},
         {prop: 'WO', label: '工單號', style: {'text-align': 'center'}},
@@ -61,103 +79,66 @@ export default {
         {prop: 'stock', label: '庫存', style: {'text-align': 'center'}},
         {prop: 'operation', label: '', style: {'text-align': 'center'}},
       ],
-      tableData: [
-        {
-          PN: '700-203-21',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 1000,
-          stock: 5000,
-          ordered: false,
-        },
-        {
-          PN: '700-222-31',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 100,
-          stock: 500,
-          ordered: false,
-        },
-        {
-          PN: '700-302-22',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 10,
-          stock: 5000,
-          ordered: false,
-        },
-        {
-          PN: '700-540-11',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 400,
-          stock: 5000,
-          ordered: false,
-        },
-        {
-          PN: '800-205-61',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 1000,
-          stock: 50,
-          ordered: false,
-        },
-        {
-          PN: '800-233-71',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 1000,
-          stock: 5000,
-          ordered: false,
-        },
-        {
-          PN: '800-223-31',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 10,
-          stock: 50,
-          ordered: false,
-        },
-        {
-          PN: '700-253-51',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 400,
-          stock: 500,
-          ordered: false,
-        },
-        {
-          PN: '700-203-21',
-          type: 'A',
-          WO: '80027382',
-          time: '2021-01-22 10:10:00',
-          demand: 325,
-          stock: 500,
-          ordered: false,
-        }
-      ],
+      tableData: [],
+      tableData_show: [],
+      currentPage: 1,
+      pageSize: 10,
     }
   },
   created() {
     this.check_ordered()
+    this.getData()
   },
   methods: {
+    async getData() {
+      var self = this
+      this.loading = true 
+      await api.get_material_list(('type' + this.catagory))
+      .then(
+        function resolved(value) {
+          self.tableData = value
+          self.changePage(1)
+        }
+      )
+      .catch(function error(error) {
+        console.log(error)
+        self.tableData = []
+        self.changePage(1)
+      })
+      this.loading = false
+    },
+    changePage(page) {
+      let start, end
+      start = (page-1)*this.pageSize
+      end = start + this.pageSize
+      this.tableData_show = this.tableData.slice(start, end)
+    },
     check_ordered() {
+      var self = this
+      let newTable = [...this.tableData]
       const ordered_pn = this.$store.getters.ordered_pn
       for (let i=0; i<this.tableData.length; i++) {
         if (ordered_pn[this.tableData[i]['PN']]) {
-          this.tableData[i]['ordered'] = true
+          newTable[i]['ordered'] = true
+
+          // click loading effect
+          newTable[i]['loading'] = true
+          setTimeout(function loading_timeout() {
+            newTable[i]['loading'] = false
+            self.tableData = newTable
+            self.changePage(1)
+          }, 200)
         }
         else {
-          this.tableData[i]['ordered'] = false
+          newTable[i]['ordered'] = false
+
+          // click loading effect
+          newTable[i]['loading'] = true
+          setTimeout(function loading_timeout() {
+            newTable[i]['loading'] = false
+            self.tableData = newTable
+            self.changePage(1)
+          }, 200)
         }
       }
     },
@@ -184,7 +165,7 @@ export default {
 <style lang="scss" module>
 @import '@/styles/general.scss';
 .wrapper {
-  @include block(100%, 500px);
+  @include block(100%, 480px);
   border-radius: 3px;
   box-shadow: 0px 0px 10px 1px rgb(26, 24, 24);
   background-color: var(--bg-color-snd);

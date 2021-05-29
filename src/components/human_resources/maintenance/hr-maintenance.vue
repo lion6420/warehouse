@@ -190,7 +190,7 @@ export default {
       await api.get_current_hr()
       .then(
         function fulfilled(value) {
-          self.tableData = value.data
+          self.tableData = value
           self.getFilterOptions()
           self.onTableFilter()
         },

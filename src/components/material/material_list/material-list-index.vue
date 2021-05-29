@@ -2,13 +2,13 @@
   <div :class="$style.material">
     <div :class="$style.row">
       <div :class="$style.material_list">
-        <material-list-element catagory="Catagory A"></material-list-element>
+        <material-list-element catagory="A"></material-list-element>
       </div>
       <div :class="$style.material_list">
-        <material-list-element catagory="Catagory B"></material-list-element>
+        <material-list-element catagory="B"></material-list-element>
       </div>
       <div :class="$style.material_list">
-        <material-list-element catagory="Catagory C"></material-list-element>
+        <material-list-element catagory="C"></material-list-element>
       </div>
       <div :class="$style.material_list">
         <material-list-element catagory="Expensive"></material-list-element>
@@ -42,7 +42,7 @@ export default {
     flex-wrap: wrap;
     justify-content: space-evenly;
     .material_list {
-      @include block(48%, 500px);
+      @include block(48%, 480px);
       margin-top:20px;
     }
   }
@@ -56,7 +56,7 @@ export default {
       flex-wrap: wrap;
       justify-content: space-evenly;
       .material_list {
-        @include block(98%, 500px);
+        @include block(98%, 480px);
         margin: auto;
         margin-top:20px;
       }

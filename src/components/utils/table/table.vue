@@ -94,7 +94,7 @@
   </div>
   <div v-if="loading" :class="$style.loading">
     <slot name="loading">
-      <a-spin tip="加載中......" size="large"></a-spin>
+      <t-spin tip="加載中"></t-spin>
     </slot>
   </div>
   </div>
@@ -102,7 +102,11 @@
 </template>
 
 <script>
+import tSpin from '../spin'
 export default {
+  components: {
+    tSpin,
+  },
   props: {
     columns: {
       type: Array,

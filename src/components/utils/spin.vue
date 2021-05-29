@@ -70,6 +70,7 @@ export default {
   justify-content: center;
   .tip {
     font-family: $aphabet;
+    margin: auto 0px auto 0px;
   }
   .loader {
     border: 3px solid #fff;
@@ -77,6 +78,7 @@ export default {
     border-top: 3px solid #3498db;
     animation: spin 1s linear infinite;
     margin-right:10px;
+    margin: auto 10px auto 0px;
   }
   @keyframes spin {
     0% { transform: rotate(0deg); }
