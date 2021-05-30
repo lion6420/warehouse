@@ -3,6 +3,9 @@
     {
       "PN": "700-203-21",
       "type": "A",
+      "name": "Material A-1",
+      "supplier": "Supplier A",
+      "price": 100,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1000,
@@ -12,6 +15,9 @@
     {
       "PN": "700-222-31",
       "type": "A",
+      "name": "Material A-2",
+      "supplier": "Supplier A",
+      "price": 120,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 100,
@@ -21,6 +27,9 @@
     {
       "PN": "700-302-22",
       "type": "A",
+      "name": "Material A-3",
+      "supplier": "Supplier A",
+      "price": 420,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 10,
@@ -30,6 +39,9 @@
     {
       "PN": "700-540-11",
       "type": "A",
+      "name": "Material A-4",
+      "supplier": "Supplier A",
+      "price": 254,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 420,
@@ -39,6 +51,9 @@
     {
       "PN":"700-205-06",
       "type":"A",
+      "name": "Material A-5",
+      "supplier": "Supplier A",
+      "price": 154,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1000,
@@ -48,6 +63,9 @@
     {
       "PN": "700-233-71",
       "type": "A",
+      "name": "Material A-6",
+      "supplier": "Supplier A",
+      "price": 155,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1400,
@@ -57,6 +75,9 @@
     {
       "PN":"700-223-73",
       "type":"A",
+      "name": "Material A-7",
+      "supplier": "Supplier A",
+      "price": 332,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 155,
@@ -66,6 +87,9 @@
     {
       "PN": "700-253-51",
       "type": "A",
+      "name": "Material A-8",
+      "supplier": "Supplier A",
+      "price": 332,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 400,
@@ -75,6 +99,9 @@
     {
       "PN": "700-453-21",
       "type": "A",
+      "name": "Material A-9",
+      "supplier": "Supplier A",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 625,
@@ -86,6 +113,9 @@
     {
       "PN": "800-203-21",
       "type": "B",
+      "name": "Material B-1",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1000,
@@ -95,6 +125,9 @@
     {
       "PN": "800-222-31",
       "type": "B",
+      "name": "Material B-2",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 100,
@@ -104,6 +137,9 @@
     {
       "PN": "800-302-22",
       "type": "B",
+      "name": "Material B-3",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 10,
@@ -113,6 +149,9 @@
     {
       "PN": "800-540-11",
       "type": "B",
+      "name": "Material B-4",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 400,
@@ -122,6 +161,9 @@
     {
       "PN": "800-205-06",
       "type":"B",
+      "name": "Material B-5",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1000,
@@ -131,6 +173,9 @@
     {
       "PN": "800-233-71",
       "type": "B",
+      "name": "Material B-6",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1000,
@@ -140,6 +185,9 @@
     {
       "PN": "800-223-73",
       "type":"B",
+      "name": "Material B-7",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 10,
@@ -149,6 +197,9 @@
     {
       "PN": "800-253-51",
       "type": "B",
+      "name": "Material B-8",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 400,
@@ -158,6 +209,9 @@
     {
       "PN": "800-253-21",
       "type": "B",
+      "name": "Material B-9",
+      "supplier": "Supplier B",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 325,
@@ -169,6 +223,9 @@
     {
       "PN": "900-203-21",
       "type": "C",
+      "name": "Material C-1",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1300,
@@ -178,6 +235,9 @@
     {
       "PN": "900-222-31",
       "type": "C",
+      "name": "Material C-2",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 101,
@@ -187,6 +247,9 @@
     {
       "PN": "900-302-22",
       "type": "C",
+      "name": "Material C-3",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 14,
@@ -196,6 +259,9 @@
     {
       "PN": "900-540-11",
       "type": "C",
+      "name": "Material C-4",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 540,
@@ -205,6 +271,9 @@
     {
       "PN": "900-205-06",
       "type":"C",
+      "name": "Material C-5",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 5200,
@@ -214,6 +283,9 @@
     {
       "PN": "900-233-71",
       "type": "C",
+      "name": "Material C-6",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1400,
@@ -223,6 +295,9 @@
     {
       "PN": "900-223-73",
       "type":"C",
+      "name": "Material C-7",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 10,
@@ -232,6 +307,9 @@
     {
       "PN": "900-253-51",
       "type": "C",
+      "name": "Material C-8",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 420,
@@ -241,6 +319,9 @@
     {
       "PN": "900-233-21",
       "type": "C",
+      "name": "Material C-9",
+      "supplier": "Supplier C",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 325,
@@ -252,6 +333,9 @@
     {
       "PN": "100-203-21",
       "type": "Expensive",
+      "name": "Material D-1",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1200,
@@ -261,6 +345,9 @@
     {
       "PN": "100-222-31",
       "type": "Expensive",
+      "name": "Material D-2",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 102,
@@ -270,6 +357,9 @@
     {
       "PN": "100-302-22",
       "type": "Expensive",
+      "name": "Material D-3",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 12,
@@ -279,6 +369,9 @@
     {
       "PN": "100-540-11",
       "type": "Expensive",
+      "name": "Material D-4",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 405,
@@ -288,6 +381,9 @@
     {
       "PN": "100-205-06",
       "type":"Expensive",
+      "name": "Material D-5",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 105,
@@ -297,6 +393,9 @@
     {
       "PN": "100-233-71",
       "type": "Expensive",
+      "name": "Material D-6",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 1030,
@@ -306,6 +405,9 @@
     {
       "PN": "100-223-73",
       "type":"Expensive",
+      "name": "Material D-7",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 50,
@@ -315,6 +417,9 @@
     {
       "PN": "100-253-51",
       "type": "Expensive",
+      "name": "Material D-8",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 40,
@@ -324,6 +429,9 @@
     {
       "PN": "100-213-21",
       "type": "Expensive",
+      "name": "Material D-9",
+      "supplier": "Supplier D",
+      "price": 132,
       "WO": "80027382",
       "time": "2021-01-22 10:10:00",
       "demand": 325,

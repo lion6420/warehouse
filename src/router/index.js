@@ -9,7 +9,8 @@ import Human_Resources_Statistics from '@/components/human_resources/statistics/
 
 
 import Material_List from '@/components/material/material_list/material-list-index'
-import Material_History from '@/components/material/material_apply_history/material-history-index'
+import Material_Apply from '@/components/material/material_apply/material-apply-index'
+import Material_History from '@/components/material/material_history/material-history-index'
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -64,6 +65,14 @@ const routes = [
     path: '/material/list',
     name: 'material_list',
     component: Material_List,
+    meta: {
+      requireAuth: true,
+    }
+  },
+  {
+    path: '/material/apply',
+    name: 'material_apply',
+    component: Material_Apply,
     meta: {
       requireAuth: true,
     }

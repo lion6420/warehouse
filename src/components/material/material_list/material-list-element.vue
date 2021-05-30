@@ -21,12 +21,12 @@
           <div :class="$style.list_operation">
             <!--add order-->
             <div v-if="!scope.data['ordered']" :class="$style.operation_plus" @click="add_order(scope.data)">
-              <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px; position:relative; right:-10px"></t-spin>
+              <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px;"></t-spin>
               <span class="fas fa-plus" v-if="!scope.data['loading']"></span>
             </div>
             <!--remove order-->
             <div v-else :class="$style.operation_minus" @click="remove_order(scope.data['PN'])">
-              <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px; position:relative; right:-10px"></t-spin>
+              <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px;"></t-spin>
               <span class="fas fa-times-circle" v-if="!scope.data['loading']"></span>
             </div>
             <!--information-->
@@ -86,7 +86,6 @@ export default {
     }
   },
   created() {
-    this.check_ordered()
     this.getData()
   },
   methods: {
@@ -97,6 +96,7 @@ export default {
       .then(
         function resolved(value) {
           self.tableData = value
+          self.check_ordered()
           self.changePage(1)
         }
       )
@@ -114,38 +114,46 @@ export default {
       this.tableData_show = this.tableData.slice(start, end)
     },
     check_ordered() {
-      var self = this
-      let newTable = [...this.tableData]
       const ordered_pn = this.$store.getters.ordered_pn
       for (let i=0; i<this.tableData.length; i++) {
         if (ordered_pn[this.tableData[i]['PN']]) {
-          newTable[i]['ordered'] = true
-
-          // click loading effect
-          newTable[i]['loading'] = true
-          setTimeout(function loading_timeout() {
-            newTable[i]['loading'] = false
-            self.tableData = newTable
-            self.changePage(1)
-          }, 200)
+          this.tableData[i]['ordered'] = true
         }
         else {
-          newTable[i]['ordered'] = false
-
-          // click loading effect
-          newTable[i]['loading'] = true
-          setTimeout(function loading_timeout() {
-            newTable[i]['loading'] = false
-            self.tableData = newTable
-            self.changePage(1)
-          }, 200)
+          this.tableData[i]['ordered'] = false
         }
       }
     },
     add_order(order) {
+      var self = this
+
+      // click loading effect
+      for (let i=0; i<this.tableData.length; i++) {
+        if (order.PN === this.tableData[i]['PN']) {
+          this.tableData[i]['loading'] = true
+          setTimeout(function loading_timeout() {
+            self.tableData[i]['loading'] = false
+            self.changePage(1)
+          }, 200)
+        }
+      }
+
       this.$store.dispatch('add_order', order)
-    },
+},
     remove_order(PN) {
+      var self = this
+
+      // click loading effect
+      for (let i=0; i<this.tableData.length; i++) {
+        if (PN === this.tableData[i]['PN']) {
+          this.tableData[i]['loading'] = true
+          setTimeout(function loading_timeout() {
+            self.tableData[i]['loading'] = false
+            self.changePage(1)
+          }, 200)
+        }
+      }
+
       this.$store.dispatch('remove_order', PN)
     },
   },

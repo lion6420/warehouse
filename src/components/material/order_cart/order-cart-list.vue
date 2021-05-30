@@ -7,7 +7,9 @@
       </div>
 
       <!--image-->
-      <div :class="$style.img"></div>
+      <div :class="$style.img">
+        <img width="70" height="70" style="margin-top:5px" src="/figure/material.jpg" />
+      </div>
 
       <!--description-->
       <div :class="$style.title">
@@ -18,13 +20,13 @@
       <!--amount-->
       <div :class="$style.amount">
         <div :class="$style.minus" @click="cut_amount(order)">
-          <span class="fas fa-minus" style="position:relative;top:2px;left:8px"></span>
+          <span class="fas fa-minus"></span>
         </div>
         <div :class="$style.inputBlock">
-          <t-input height="25px" width="100px" textAlign="center" v-model="order.demand"></t-input>
+          <t-input height="25px" width="100px" textAlign="center" v-model="order.demand" type="number"></t-input>
         </div>
         <div :class="$style.plus" @click="add_amount(order)">
-          <span class="fas fa-plus" style="position:relative;top:2px;left:2px"></span>
+          <span class="fas fa-plus"></span>
         </div>
       </div>
 
@@ -62,7 +64,7 @@ export default {
   computed: {
     orderList() {
       return this.$store.getters.orderList
-    }
+    },
   }
 }
 </script>
@@ -74,7 +76,7 @@ export default {
   .orders {
     @include block(100%, 80px);
     display: flex;
-    @include border();
+    border-bottom: 1px solid;
     border-color: var(--bg-color-forth);
     .selectBox {
       @include block(40px);

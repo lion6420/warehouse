@@ -65,7 +65,7 @@ export default {
 <style lang="scss" module>
 @import '@/styles/general.scss';
 .material_history {
-  @include block(90%);
+  @include block(95%);
   margin: auto;
   .title {
     @include block(100%);

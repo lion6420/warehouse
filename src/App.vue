@@ -7,7 +7,7 @@
       <div :class="$style.sidebar" v-if="isLoggedIn">
         <sidebar :menu_type="menu_type"></sidebar>
       </div>
-      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? '200px':'0px'}">
+      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? '220px':'0px'}">
         <router-view></router-view>
       </div>
       <order-cart v-if="isLoggedIn"></order-cart>

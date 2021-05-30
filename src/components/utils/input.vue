@@ -25,7 +25,7 @@
 export default {
   props: {
     value: {
-      type: String,
+      type: [String, Number],
       require: true,
     },
     type: {
@@ -106,4 +106,16 @@ export default {
     box-shadow: 0px 0px 5px #739ce9;
   }
 
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 </style>
