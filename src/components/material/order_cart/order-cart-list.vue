@@ -82,10 +82,10 @@ export default {
       @include block(40px);
     }
     .img {
-      @include block(100px);
+      @include block(80px);
     }
     .title {
-      @include block(130px);
+      @include block(140px);
       .PN {
         color: $color-white;
         font-size: 20px;

@@ -14,6 +14,12 @@
     </div>
     <div :class="$style.content">
       <material-apply-element v-for="(order,o_index) in orderList" :key="o_index" :order="order"></material-apply-element>
+      <div :class="$style.list_empty" v-if="!orderList.length">
+        <div :class="$style.empty_icon">
+          <span class="fas fa-folder-open"></span>
+        </div>
+        <div :class="$style.empty_label">Empty</div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,6 +81,23 @@ export default {
     .operation {
       @include block(50px);
       margin-left: 10px;
+    }
+  }
+  .list_empty {
+    @include block(100%);
+    margin-top:100px;
+    .empty_icon {
+      @include block(140px);
+      color: var(--text-color);
+      font-size: 80px;
+      text-align: center;
+      margin: auto;
+    }
+    .empty_label {
+      color: var(--text-color);
+      font-size: 30px;
+      text-align: center;
+      font-family: $aphabet;
     }
   }
 }
