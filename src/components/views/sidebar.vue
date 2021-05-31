@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.wrapper">
-    <sidebar theme="dark" :menu="menu" style="margin-top:60px"></sidebar>
+    <sidebar theme="dark" :menu="menu" style="margin-top:60px" v-if="this.menu_type != 'achievement'"></sidebar>
   </div>  
 </template>
 

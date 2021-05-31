@@ -5,9 +5,9 @@
     </div>
     <div :class="$style.body">
       <div :class="$style.sidebar" v-if="isLoggedIn">
-        <sidebar :menu_type="menu_type"></sidebar>
+        <sidebar :menu_type="menu_type" v-if="menu_type !== 'achievement'"></sidebar>
       </div>
-      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? '220px':'0px'}">
+      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? (menu_type !== 'achievement' ? '220px':'0px'):'0px'}">
         <router-view></router-view>
       </div>
       <order-cart v-if="isLoggedIn"></order-cart>
@@ -80,7 +80,6 @@ export default {
     flex-wrap: wrap;
     .sidebar {
       @include block(200px, 100%);
-      box-shadow: 1px 1px 5px 1px rgb(39, 39, 39);
       position: fixed;
       bottom: 0px;
     }

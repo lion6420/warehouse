@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.wrapper">
-    <div :class="$style.title">Material Apply</div>
+    <div :class="$style.title">
+      <div>Material Apply</div>
+    </div>
     <div :class="$style.header">
       <div :class="$style.selectBox"></div>
       <div :class="$style.img"></div>
@@ -21,19 +23,55 @@
         <div :class="$style.empty_label">Empty</div>
       </div>
     </div>
+    <br/>
+    <hr style="border-color: #AAAAAA"/>
+    <div :class="$style.total_row">
+      <div>總計: {{total_price}}</div>
+      <div style="float:right">
+        <div :class="$style.submit_btn" @click="submit_order">
+          <span v-if="!loading_submit">送出</span>
+          <t-spin v-if="loading_submit" style="padding: 5px 0px"></t-spin>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import tSpin from '@/components/utils/spin'
 export default {
   components: {
     materialApplyElement: () => import('./material-apply-element'),
+    tSpin
+  },
+  data() {
+    return {
+      loading_submit: false,
+    }
+  },
+  methods: {
+    submit_order() {
+      if (!this.orderList.length) {
+        alert('列表為空')
+        return
+      }
+      var self = this
+      this.loading_submit = true
+      setTimeout(function mock_submit_loading() {
+        self.loading_submit = false
+        alert('送出成功')
+        self.$store.dispatch('clear_order')
+      }, 500)
+    }
   },
   computed: {
     orderList() {
       return this.$store.getters.orderList
+    },
+    total_price() {
+      return this.$store.getters.total_price
     }
-  }
+  },
 }
 </script>
 
@@ -98,6 +136,23 @@ export default {
       font-size: 30px;
       text-align: center;
       font-family: $aphabet;
+    }
+  }
+  .total_row {
+    color: var(--text-color-hover);
+    font-size: 25px;
+    float: right;
+    .submit_btn {
+      background-color: $color-btn;
+      width: 70px;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 20px;
+      cursor: pointer;
+      margin-top:10px;
+    }
+    .submit_btn:hover {
+      background-color: $color-btn-hover;
     }
   }
 }

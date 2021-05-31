@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.order_cart">
+  <div :class="$style.order_cart" :id="'order_cart_' + _uid.toString()">
     <div :class="$style.order_cart_btn_warpper">
       <div :class="$style.order_cart_btn" @click="is_expand_cart_list = is_expand_cart_list ? false:true">
         <span v-if="is_expand_cart_list" class="fas fa-angle-right" style="position:relative;top:2px"></span>
@@ -40,15 +40,30 @@ export default {
       is_expand_cart_list: false,
     }
   },
+  created() {
+    window.addEventListener('click', this.clickEventHandler)
+  },
   methods: {
     toSubmitPage() {
+      if (window.location.pathname === '/warehouse/material/apply') return
       this.$router.push({name: 'material_apply'})
-    }
+    },
+    clickEventHandler(evt) {
+      let DOM = document.getElementById('order_cart_' + this._uid.toString())
+
+      if (DOM && DOM.contains(evt.target)) return
+      else if (evt.target.id === 'add_material_btn' || evt.target.id === 'remove_material_btn') return
+      else if (evt.target.id === 'material_detail_btn') return
+      else this.is_expand_cart_list = false
+    },
   },
   computed: {
     cartState() {
       return this.$store.getters.cartState
     }
+  },
+  destroyed() {
+    window.removeEventListener('click', this.clickEventHandler)
   }
 }
 </script>

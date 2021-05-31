@@ -22,15 +22,24 @@
             <!--add order-->
             <div v-if="!scope.data['ordered']" :class="$style.operation_plus" @click="add_order(scope.data)">
               <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px;"></t-spin>
-              <span class="fas fa-plus" v-if="!scope.data['loading']"></span>
+              <span class="fas fa-plus" v-if="!scope.data['loading']" id="add_material_btn"></span>
             </div>
             <!--remove order-->
             <div v-else :class="$style.operation_minus" @click="remove_order(scope.data['PN'])">
               <t-spin v-if="scope.data['loading']" size="small" style="margin-top:5px;"></t-spin>
-              <span class="fas fa-times-circle" v-if="!scope.data['loading']"></span>
+              <span class="fas fa-times-circle" v-if="!scope.data['loading']" id="remove_material_btn"></span>
             </div>
             <!--information-->
-            <div :class="$style.operation_detail"><span class="fas fa-info-circle"></span></div>
+            <div :class="$style.operation_detail">
+              <a-tooltip placement="topLeft" trigger="click">
+                <template slot="title">
+                  <div>品名: {{scope.data['name']}}</div>
+                  <div>供應商: {{scope.data['supplier']}}</div>
+                  <div>單價: ${{scope.data['price']}}</div>
+                </template>
+                <span class="fas fa-info-circle" id="material_detail_btn"></span>
+              </a-tooltip>
+            </div>
           </div>
         </template>
         <template slot="stock" slot-scope="scope">

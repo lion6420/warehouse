@@ -3,6 +3,7 @@ const Order = {
     orderList: [],
     keep_pn: {},
     loading: false,
+    total_price: 0,
   },
   mutations: {
     cart_loading(state) {
@@ -12,14 +13,15 @@ const Order = {
       state.loading = false
     },
     add_one(state, order) {
-      state.orderList.push({
+      let newOrder = {
         PN: order.PN,
         type: order.type,
         name: order.name,
         supplier: order.supplier,
         price: order.price,
         demand: (order.demand - order.stock) > 0 ? (order.demand - order.stock) : 100,
-      })
+      }
+      state.orderList.push(newOrder)
       state.keep_pn[order.PN] = true
 
       window.localStorage.setItem('orderList', JSON.stringify(state.orderList))
@@ -42,6 +44,9 @@ const Order = {
     remove_all(state) {
       state.orderList = []
       state.keep_pn = {}
+
+      window.localStorage.removeItem('orderList')
+      window.localStorage.removeItem('keep_pn')
     },
     add_amount(state, PN) {
       for (let i=0; i<state.orderList.length; i++) {
@@ -49,6 +54,8 @@ const Order = {
           state.orderList[i]['demand']++
         }
       }
+      
+      window.localStorage.setItem('orderList', JSON.stringify(state.orderList))
     },
     cut_amount(state, PN) {
       for (let i=0; i<state.orderList.length; i++) {
@@ -56,6 +63,15 @@ const Order = {
           state.orderList[i]['demand']--
         }
       }
+      
+      window.localStorage.setItem('orderList', JSON.stringify(state.orderList))
+    },
+    cal_price(state) {
+      state.total_price = 0
+      for (let i=0; i<state.orderList.length; i++) {
+        state.total_price += state.orderList[i]['price']*state.orderList[i]['demand']
+      }
+      window.localStorage.setItem('total_price', state.total_price)
     }
   },
   actions: {
@@ -64,6 +80,7 @@ const Order = {
       commit('cart_loading')
 
       commit('add_one', order)
+      commit('cal_price')
       
       //resolved
       setTimeout(function mock_cart_loading() {
@@ -75,14 +92,24 @@ const Order = {
       commit('cart_loading')
 
       commit('remove_one', PN)
+      commit('cal_price')
       
       //resolved
       setTimeout(function mock_cart_loading() {
         commit('cart_resolve')
       }, 200)
     },
+    add_amount({commit}, PN) {
+      commit('add_amount', PN)
+      commit('cal_price')
+    },
+    cut_amount({commit}, PN) {
+      commit('cut_amount', PN)
+      commit('cal_price')
+    },
     clear_order({commit}) {
       commit('remove_all')
+      commit('cal_price')
     },
   },
   getters: {
@@ -106,6 +133,13 @@ const Order = {
         state.orderList = order_list
       }
       return state.orderList.length
+    },
+    total_price(state) {
+      let total_price = parseInt(window.localStorage.getItem('total_price'))
+      if (total_price && !state.total_price) {
+        state.total_price = total_price
+      }
+      return state.total_price
     },
     cartState(state) {
       return state.loading ? 'loading':'resolved'

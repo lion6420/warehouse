@@ -70,10 +70,10 @@ export default {
       this.$store.dispatch('remove_order', order.PN)
     },
     add_amount(order) {
-      this.$store.commit('add_amount', order.PN)
+      this.$store.dispatch('add_amount', order.PN)
     },
     cut_amount(order) {
-      this.$store.commit('cut_amount', order.PN)
+      this.$store.dispatch('cut_amount', order.PN)
     }
   },
 }

@@ -80,6 +80,7 @@ export default {
     border-color: var(--bg-color-forth);
     .selectBox {
       @include block(40px);
+      margin-left:10px;
     }
     .img {
       @include block(80px);

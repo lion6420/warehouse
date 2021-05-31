@@ -14,6 +14,17 @@
       headerTextAlign="center"
       headerColor="#AFAFAF"
       borderColor="#4B4B4B">
+      <template slot="header" slot-scope="scope">
+        <span v-if="scope.header.prop === 'overTime_avg'">{{scope.header.label}}
+          <span class="fas fa-sort-down" v-if="sort_direction_overTime === 'down'" style="position:relative; left:5px; top:-2px; cursor:pointer" @click="sort_table(scope.header.prop)"></span>
+          <span class="fas fa-sort-up" v-else style="position:relative; left:5px; top:4px; cursor:pointer" @click="sort_table(scope.header.prop)"></span>
+        </span>
+        <span v-else-if="scope.header.prop === 'achievement'">{{scope.header.label}}
+          <span class="fas fa-sort-down" v-if="sort_direction_achieve === 'down'" style="position:relative; left:5px; top:-2px; cursor:pointer" @click="sort_table(scope.header.prop)"></span>
+          <span class="fas fa-sort-up" v-else style="position:relative; left:5px; top:4px; cursor:pointer" @click="sort_table(scope.header.prop)"></span>
+        </span>
+        <span v-else>{{scope.header.label}}</span>
+      </template>
       <template slot="WHS" slot-scope="scope">
         <div style="font-weight: bold">{{scope.data.WHS[0]}}</div>
         <div style="color:#AEAEAE;font-size: 10px">{{scope.data.WHS[1]}}</div>
@@ -41,6 +52,8 @@ export default {
   },
   data() {
     return {
+      sort_direction_overTime: 'down',
+      sort_direction_achieve: 'down',
       percentageColor: ['#D69721', '#4D94BB', '#C45857', '#0E9A36'],
       headers: [
         {prop: 'WHS', label: '倉庫', style: {'min-width': '50px'}},
@@ -105,6 +118,22 @@ export default {
           overTime_avg: 120,
         }
       ]
+    }
+  },
+  methods: {
+    sort_table(prop) {
+      if ((prop === 'overTime_avg' && this.sort_direction_overTime === 'down') || (prop === 'achievement' && this.sort_direction_achieve === 'down')) {
+        this.tableData.sort(function (a, b) {
+          return a[prop] - b[prop]
+        })
+      }
+      else {
+        this.tableData.sort(function (a, b) {
+          return b[prop] - a[prop]
+        })
+      }
+      if (prop === 'overTime_avg') this.sort_direction_overTime =  this.sort_direction_overTime === 'down' ? 'up':'down'
+      else this.sort_direction_achieve =  this.sort_direction_achieve === 'down' ? 'up':'down'
     }
   }
 }
