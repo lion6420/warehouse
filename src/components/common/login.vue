@@ -131,4 +131,24 @@ export default {
     cursor: pointer;
   }
 }
+
+@media screen and (max-width: 550px) {
+  .login {
+    width: 450px;
+    .username {
+      @include block(100%);
+      padding: 10px 0px;
+      .username_label {
+        margin-left:75px;
+      }
+    }
+    .password {
+      @include block(100%);
+      padding: 10px 0px 0px 0px;
+      .password_label {
+        margin-left:75px;
+      }
+    }
+  }
+}
 </style>

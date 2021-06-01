@@ -4,7 +4,7 @@
       <center>
         <router-link :to="link" :class="$style.item_label">
           <div :class="$style.icon"><span :class="icon.class">{{icon.label}}</span></div>
-          <span style="position:relative;top:-6px;">{{label}}</span>
+          <span style="position:relative;top:-5px;">{{label}}</span>
         </router-link>
       </center>
     </div>
@@ -62,6 +62,7 @@ export default {
     .item_label {
       color: #fff;
       font-size: 14px;
+      font-family: Microsoft JhengHei;
     }
   }
 }

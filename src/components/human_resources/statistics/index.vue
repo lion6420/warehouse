@@ -83,7 +83,7 @@ export default {
 @media screen and (max-width: 992px) {
   .hr_statistics {
     @include block(98%);
-    margin: 20px auto;
+    margin: 20px auto 50px auto;
     .statistics_row {
       @include block(100%);
       display: flex;

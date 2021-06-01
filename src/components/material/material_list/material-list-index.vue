@@ -35,7 +35,7 @@ export default {
 @import '@/styles/general.scss';
 .material {
   @include block(100%);
-  margin-bottom: 20px;
+  margin-bottom: 50px;
   .row {
     @include block(100%);
     display: flex;

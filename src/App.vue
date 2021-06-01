@@ -7,17 +7,19 @@
       <div :class="$style.sidebar" v-if="isLoggedIn">
         <sidebar :menu_type="menu_type" v-if="menu_type !== 'achievement'"></sidebar>
       </div>
-      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? (menu_type !== 'achievement' ? '220px':'0px'):'0px'}">
+      <div :class="$style.content" :style="{'margin-left': isLoggedIn ? (menu_type === 'achievement' ? '0px':''):'0px'}">
         <router-view></router-view>
       </div>
-      <order-cart v-if="isLoggedIn"></order-cart>
+      <order-cart v-if="isLoggedIn" :class="$style.order_cart"></order-cart>
     </div>
+    <mobile-footer :class="$style.mobileFooter"></mobile-footer>
   </div>
 </template>
 
 <script>
 import headbar from '@/components/views/header'
 import sidebar from '@/components/views/sidebar'
+import mobileFooter from '@/components/views/mobile-footer'
 import orderCart from '@/components/material/order_cart/order-cart-index'
 
 export default {
@@ -26,6 +28,7 @@ export default {
     headbar,
     sidebar,
     orderCart,
+    mobileFooter
   },
   data() {
     return {
@@ -87,6 +90,30 @@ export default {
       @include block(100%);
       overflow: hidden;
       margin-top:60px;
+      margin-left: 220px;
+    }
+    .order_cart {
+      margin-bottom: 40px;
+    }
+  }
+  .mobileFooter {
+    max-height: 0px;
+  }
+}
+
+@media screen and (max-width:800px) {
+  .app {
+    .body {
+      .sidebar {
+        display:none;
+      }
+      .content {
+        margin-left:0px;
+      }
+    }
+    .mobileFooter {
+      max-height: 45px;
+      transition: max-height 0.2s linear;
     }
   }
 }

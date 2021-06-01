@@ -30,13 +30,11 @@
         <div style="color:#AEAEAE;font-size: 10px">{{scope.data.WHS[1]}}</div>
       </template>
       <template slot="achievement" slot-scope="scope">
-        <div style="display:flex;justify-content:space-between">
-          <div style="color: #AFAFAF;font-size: 15px"><span :class="$style.table_avhievement_num">未達成件數:</span> {{scope.data.unachieveAmount}}</div>
+        <div :class="$style.achievement">
+          <div :class="$style.table_avhievement_num">未達成件數: {{scope.data.unachieveAmount}}</div>
           <div>{{scope.data.achievement + '%'}}</div>
         </div>
-        <div>
-          <percentage :percentage="scope.data.achievement" :color="percentageColor[scope.data.index%4]"></percentage>
-        </div>
+        <percentage :class="$style.percentage" :percentage="scope.data.achievement" :color="percentageColor[scope.data.index%4]"></percentage>
       </template>
     </t-table>
   </div>
@@ -56,11 +54,11 @@ export default {
       sort_direction_achieve: 'down',
       percentageColor: ['#D69721', '#4D94BB', '#C45857', '#0E9A36'],
       headers: [
-        {prop: 'WHS', label: '倉庫', style: {'min-width': '50px'}},
+        {prop: 'WHS', label: '倉庫', style: {'min-width': '70px'}},
         {prop: 'AREA', label: '區域', style: {'min-width': '50px'}},
-        {prop: 'achievement', label: '達成率', style: {'min-width': '150px', 'max-width': '200px'}},
-        {prop: 'amount', label: '員工人數 (人)'},
-        {prop: 'overTime_avg', label: '平均超時 (min)'},
+        {prop: 'achievement', label: '達成率', style: {'min-width': '80px', 'max-width': '200px'}},
+        {prop: 'amount', label: '員工人數', style: {'min-width': '100px', 'max-width': '200px'}},
+        {prop: 'overTime_avg', label: '平均超時 (min)', style: {'min-width': '120px', 'max-width': '200px'}},
       ],
       tableData: [
         {
@@ -157,13 +155,29 @@ export default {
     @include block(95%);
     margin: auto;
     padding: 10px 0px;
+    .achievement {
+       display:flex;
+       justify-content:space-between;
+      .table_avhievement_num {
+        color: var(--text-color);
+        font-size: 15px;
+      }
+    }
   }
 }
 
 @media screen and (max-width: 768px) {
   .wrapper {
-    .table_avhievement_num {
-      display: none;
+    .table {
+      .achievement {
+        justify-content:center;
+        .table_avhievement_num {
+          display: none;
+        }
+      }
+      .percentage {
+        display: none;
+      }
     }
   }
 }
