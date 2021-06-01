@@ -56,12 +56,12 @@ export default {
     return {
       headers: [
         {label: '單號', prop: 'SN', style: {'text-align': 'center'}},
-        {label: '料號', prop: 'PN', style: {'text-align': 'center'}},
-        {label: '申請數量', prop: 'amount', style: {'text-align': 'center'}},
-        {label: '申請人', prop: 'applicant', style: {'text-align': 'center'}},
-        {label: '倉庫位置', prop: 'position', style: {'text-align': 'center'}},
-        {label: '申請時間', prop: 'applied_time', style: {'text-align': 'center'}},
-        {label: '簽核狀態', prop: 'status', style: {'text-align': 'center'}},
+        {label: '料號', prop: 'PN', style: {'text-align': 'center', 'min-width': '100px'}},
+        {label: '申請數量', prop: 'amount', style: {'text-align': 'center', 'min-width': '80px'}},
+        {label: '申請人', prop: 'applicant', style: {'text-align': 'center', 'min-width': '80px'}},
+        {label: '倉庫位置', prop: 'position', style: {'text-align': 'center', 'min-width': '80px'}},
+        {label: '申請時間', prop: 'applied_time', style: {'text-align': 'center', 'min-width': '120px'}},
+        {label: '簽核狀態', prop: 'status', style: {'text-align': 'center', 'min-width': '80px'}},
       ],
       loading: false,
       tableData: [],

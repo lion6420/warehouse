@@ -139,7 +139,7 @@ export default {
   margin-bottom:30px;
   text-align: center;
   .submitBtn {
-    @include block(5%, 34px, $radius: 5px);
+    @include block(80px, 34px, $radius: 5px);
     @include border();
     font-size: 20px;
     background-color: rgb(62, 158, 62);

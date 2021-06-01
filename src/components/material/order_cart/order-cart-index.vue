@@ -92,7 +92,7 @@ export default {
     }
   }
   .cart_list {
-    @include block(500px);
+    @include block(450px);
     background-color: var(--bg-color-trd);
     opacity: 0.95;
     transition: max-width 0.2s linear;
@@ -107,7 +107,7 @@ export default {
     .cart_list_title {
       display: flex;
       justify-content: space-between;
-      @include block(500px, 50px);
+      @include block(450px, 50px);
       color: var(--text-color);
       font-size: 24px;
       padding:5px;

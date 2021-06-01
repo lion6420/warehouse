@@ -6,12 +6,14 @@
     <div :class="$style.header">
       <div :class="$style.selectBox"></div>
       <div :class="$style.img"></div>
-      <div :class="$style.header_title">料號</div>
-      <div :class="$style.name">品名</div>
-      <div :class="$style.supplier">供應商</div>
-      <div :class="$style.price_single">單價</div>
-      <div :class="$style.price_total">總價</div>
-      <div :class="$style.amount">數量</div>
+      <div :class="$style.description">
+        <div :class="$style.header_title">料號</div>
+        <div :class="$style.name">品名</div>
+        <div :class="$style.supplier">供應商</div>
+        <div :class="$style.price_single">單價</div>
+        <div :class="$style.amount">數量</div>
+        <div :class="$style.price_total">總價</div>
+      </div>
       <div :class="$style.operation"></div>
     </div>
     <div :class="$style.content">
@@ -93,31 +95,36 @@ export default {
     color: var(--text-color);
     text-align: center;
     .selectBox {
-      @include block(50px);
+      @include block(5%);
     }
     .img {
-      @include block(100px);
+      @include block(10%);
     }
-    .header_title {
-      @include block(130px);
-    }
-    .name {
-      @include block(120px);
-    }
-    .supplier {
-      @include block(100px);
-    }
-    .price_single {
-      @include block(100px);
-    }
-    .price_total {
-      @include block(100px);
-    }
-    .amount {
-      @include block(170px);
+    .description {
+      display: flex;
+      justify-content: space-around;
+      @include block(75%);
+      .header_title {
+        @include block(15%);
+      }
+      .name {
+        @include block(15%);
+      }
+      .supplier {
+        @include block(15%);
+      }
+      .price_single {
+        @include block(10%);
+      }
+      .price_total {
+        @include block(10%);
+      }
+      .amount {
+        @include block(15%);
+      }
     }
     .operation {
-      @include block(50px);
+      @include block(10%);
       margin-left: 10px;
     }
   }
@@ -142,6 +149,7 @@ export default {
     color: var(--text-color-hover);
     font-size: 25px;
     float: right;
+    margin-bottom: 100px;
     .submit_btn {
       background-color: $color-btn;
       width: 70px;
@@ -153,6 +161,17 @@ export default {
     }
     .submit_btn:hover {
       background-color: $color-btn-hover;
+    }
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .wrapper {
+    .title {
+      font-size: 30px;
+    }
+    .header {
+      display: none;
     }
   }
 }

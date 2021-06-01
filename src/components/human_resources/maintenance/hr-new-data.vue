@@ -14,9 +14,7 @@
         <div :class="$style.label">人力來源: </div>
         <t-input :class="$style.selector" v-model="new_data.SOURCE"></t-input>
       </div>
-    </div>
 
-    <div :class="$style.row">
       <div :class="$style.col">
         <div :class="$style.label">部門名稱: </div>
         <t-input :class="$style.selector" v-model="new_data.DEPARTMENT"></t-input>
@@ -29,9 +27,7 @@
         <div :class="$style.label">倉庫位置: </div>
         <single-select :class="$style.selector" :options="optionsAREA" v-model="new_data.AREA" :filter_disabled="true"></single-select>
       </div>
-    </div>
 
-    <div :class="$style.row" style="margin-bottom:10px"> 
       <div :class="$style.col">
         <div :class="$style.label">班別: </div>
         <single-select :class="$style.selector" :options="optionsCLASS" v-model="new_data.CLASS" :filter_disabled="true"></single-select>
@@ -96,6 +92,7 @@ export default {
     @include block(100%);
     display: flex;
     justify-content: flex-start;
+    flex-wrap: wrap;
     .col {
       @include block(33%);
       display: flex;
@@ -107,6 +104,26 @@ export default {
       .selector {
         @include block(80%, $radius: 3px);
         margin-top:10px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1210px) {
+  .wrapper {
+    .row {
+      .col {
+        @include block(49%);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .wrapper {
+    .row {
+      .col {
+        @include block(99%);
       }
     }
   }

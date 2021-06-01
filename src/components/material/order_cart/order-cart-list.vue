@@ -79,17 +79,17 @@ export default {
     border-bottom: 1px solid;
     border-color: var(--bg-color-forth);
     .selectBox {
-      @include block(40px);
-      margin-left:10px;
+      @include block(30px);
+      margin: 5px 0px 0px 10px;
     }
     .img {
-      @include block(80px);
+      @include block(70px);
     }
     .title {
-      @include block(140px);
+      @include block(110px);
       .PN {
         color: $color-white;
-        font-size: 20px;
+        font-size: 18px;
         margin:15px 0px 5px 10px;
       }
       .type {
@@ -133,7 +133,7 @@ export default {
         @include block(40px, 25px);
         cursor: pointer;
         border-radius: 5px;
-        margin-top:25px;
+        margin-top:30px;
         background-color: $color-red;
         color: $color-white;
         text-align: center;
