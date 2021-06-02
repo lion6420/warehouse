@@ -7,7 +7,7 @@
 
     <!--image-->
     <div :class="$style.img">
-      <img width="70" height="70" style="margin-top:5px" src="/figure/material.jpg" />
+      <img width="70" height="70" style="margin-top:5px" src="/warehouse/figure/material.jpg" />
     </div>
 
     <!--description-->
