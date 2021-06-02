@@ -2,7 +2,7 @@ import axios from 'axios'
 
 function get_current_hr() {
   return axios.request({
-    url: '/data/hr_data.json',
+    url: '/warehouse/data/hr_data.json',
     method: 'get',
   })
   .then(

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 function get_material_list(type) {
   return axios.request({
-    url: '/data/material_list_data.json',
+    url: '/warehouse/data/material_list_data.json',
     method: 'get',
   })
   .then(
@@ -25,7 +25,7 @@ function get_material_list(type) {
 
 function get_material_applied_history(PN, applicant) {
   return axios.request({
-    url: '/data/material_history_data.json',
+    url: '/warehouse/data/material_history_data.json',
     method: 'get',
   })
   .then(
