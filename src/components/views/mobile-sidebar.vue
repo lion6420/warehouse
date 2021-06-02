@@ -81,7 +81,7 @@ export default {
       DOM.style.maxHeight = '0px'
       setTimeout(function hideMenu() {
         DOM.style.display = 'none'
-      }, 200)
+      }, 10)
       this.if_expand = false
     },
     clickEventHandler(evt) {
